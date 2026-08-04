@@ -1,7 +1,6 @@
 image:
-  repository: docker.io/replace-me/it-wiki
-  tag: latest
-
+  repository: josecarlosjr/it-wiki
+  tag: sha-d7358339bce1
 ingress:
   enabled: true
   className: nginx
@@ -16,7 +15,6 @@ ingress:
     - secretName: it-wiki-tls
       hosts:
         - it-wiki.example.com
-
 autoscaling:
   enabled: true
   minReplicas: 2
