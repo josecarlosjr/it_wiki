@@ -119,6 +119,7 @@ jobs:
 
           test -s "$TEMP_FILE"
           mv "$TEMP_FILE" "$VALUES_FILE"
+          chmod 0644 "$VALUES_FILE"
           trap - EXIT
 
           echo "Updated production image reference:"
