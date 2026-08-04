@@ -1,0 +1,120 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    paths-ignore:
+      - infrastructure/helm/it-wiki/values-prod.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pipeline-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  IMAGE_NAME: it-wiki
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      - name: Static build and Pagefind index
+        run: npm run build
+
+      - name: Validate Docker build
+        run: docker build --tag it-wiki:ci .
+
+  release:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set image metadata
+        id: meta
+        shell: bash
+        run: |
+          SHORT_SHA="${GITHUB_SHA::12}"
+          echo "tag=sha-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "repository=${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ steps.meta.outputs.repository }}:${{ steps.meta.outputs.tag }}
+            ${{ steps.meta.outputs.repository }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+
+      - name: Update production values
+        uses: mikefarah/yq@v4.45.4
+        with:
+          cmd: >-
+            yq -i
+            '.image.repository = "${{ steps.meta.outputs.repository }}" |
+             .image.tag = "${{ steps.meta.outputs.tag }}"'
+            infrastructure/helm/it-wiki/values-prod.yaml
+
+      - name: Commit GitOps image reference
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Production values already reference this image."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add infrastructure/helm/it-wiki/values-prod.yaml
+          git commit -m "chore(deploy): release ${{ steps.meta.outputs.tag }} [skip ci]"
+          git push origin HEAD:main

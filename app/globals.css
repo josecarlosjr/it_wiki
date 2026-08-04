@@ -1,0 +1,94 @@
+@import "@xyflow/react/dist/style.css";
+
+:root {
+  --bg: #07111f;
+  --panel: #0d1b2d;
+  --panel-2: #12243a;
+  --text: #edf4ff;
+  --muted: #9fb0c7;
+  --line: #263c57;
+  --brand: #58a6ff;
+  --accent: #4ade80;
+  --warning: #fbbf24;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(88, 166, 255, .16), transparent 30rem),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+code { font-family: "SFMono-Regular", Consolas, monospace; }
+
+.shell { min-height: 100vh; }
+.header {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+  border-bottom: 1px solid var(--line);
+  background: rgba(7, 17, 31, .88);
+  backdrop-filter: blur(14px);
+}
+.brand { display: flex; align-items: center; gap: .7rem; font-weight: 800; }
+.brand-mark {
+  display: grid; place-items: center; width: 2.1rem; height: 2.1rem;
+  border-radius: .65rem; background: linear-gradient(135deg, var(--brand), #8b5cf6);
+}
+.nav { display: flex; gap: 1.2rem; color: var(--muted); }
+.nav a:hover { color: var(--text); }
+
+.main { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 3rem 0 5rem; }
+.hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items: center; padding: 3rem 0; }
+.eyebrow { color: var(--accent); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
+h1 { font-size: clamp(2.4rem, 6vw, 5rem); line-height: .98; margin: .7rem 0 1.2rem; letter-spacing: -.055em; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin: 0 0 1rem; }
+h3 { margin-top: 0; }
+.lead { color: var(--muted); line-height: 1.75; font-size: 1.08rem; max-width: 66ch; }
+.actions { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.button {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .8rem 1rem;
+  border-radius: .7rem; border: 1px solid var(--line); background: var(--panel); font-weight: 700;
+}
+.button.primary { background: var(--brand); color: #04101f; border-color: transparent; }
+.button:hover { transform: translateY(-1px); }
+
+.panel, .card {
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(18,36,58,.95), rgba(13,27,45,.95));
+  border-radius: 1rem; box-shadow: 0 20px 70px rgba(0,0,0,.22);
+}
+.panel { padding: 1.2rem; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.card { padding: 1.25rem; }
+.card p { color: var(--muted); line-height: 1.65; }
+.card-meta { color: var(--brand); font-size: .86rem; font-weight: 700; }
+.section { margin-top: 4rem; }
+.pill { display: inline-flex; border: 1px solid var(--line); padding: .35rem .65rem; border-radius: 999px; color: var(--muted); font-size: .82rem; margin: .2rem; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+.stat { padding: 1rem; border: 1px solid var(--line); border-radius: .8rem; background: rgba(7,17,31,.55); }
+.stat strong { display: block; font-size: 1.6rem; }
+.diagram { height: 430px; border: 1px solid var(--line); border-radius: .9rem; overflow: hidden; background: #07111f; }
+.controls { display: flex; align-items: center; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
+.controls button { color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: .6rem; padding: .65rem .85rem; cursor: pointer; }
+.step-copy { color: var(--muted); flex: 1; min-width: 260px; }
+.lesson-layout { display: grid; grid-template-columns: 260px 1fr; gap: 2rem; }
+.sidebar { position: sticky; top: 5.5rem; align-self: start; }
+.sidebar a { display: block; color: var(--muted); padding: .5rem 0; }
+.sidebar a:hover { color: var(--text); }
+.article { min-width: 0; }
+.callout { border-left: 3px solid var(--brand); background: var(--panel); padding: 1rem; border-radius: 0 .7rem .7rem 0; margin: 1rem 0; }
+.codeblock { overflow-x: auto; background: #030912; border: 1px solid var(--line); padding: 1rem; border-radius: .7rem; }
+.footer { color: var(--muted); border-top: 1px solid var(--line); padding: 2rem clamp(1rem, 4vw, 4rem); text-align: center; }
+
+@media (max-width: 850px) {
+  .hero, .lesson-layout { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .nav { display: none; }
+}

@@ -1,0 +1,6 @@
+IT_WIKI instalado.
+
+Host configurado:
+{{- range .Values.ingress.hosts }}
+  https://{{ .host }}
+{{- end }}
