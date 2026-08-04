@@ -98,13 +98,26 @@ jobs:
           sbom: true
 
       - name: Update production values
-        uses: mikefarah/yq@v4.45.4
-        with:
-          cmd: >-
-            yq -i
-            '.image.repository = "${{ steps.meta.outputs.repository }}" |
-             .image.tag = "${{ steps.meta.outputs.tag }}"'
-            infrastructure/helm/it-wiki/values-prod.yaml
+        shell: bash
+        env:
+          IMAGE_REPOSITORY: ${{ steps.meta.outputs.repository }}
+          IMAGE_TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          docker run --rm \
+            --env IMAGE_REPOSITORY \
+            --env IMAGE_TAG \
+            --volume "$PWD:/workdir" \
+            mikefarah/yq:4.45.4 \
+            -i \
+            '.image.repository = strenv(IMAGE_REPOSITORY) | .image.tag = strenv(IMAGE_TAG)' \
+            /workdir/infrastructure/helm/it-wiki/values-prod.yaml
+
+          echo "Updated production image reference:"
+          docker run --rm \
+            --volume "$PWD:/workdir" \
+            mikefarah/yq:4.45.4 \
+            '.image' \
+            /workdir/infrastructure/helm/it-wiki/values-prod.yaml
 
       - name: Commit GitOps image reference
         shell: bash
