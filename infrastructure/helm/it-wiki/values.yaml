@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: docker.io/replace-me/it-wiki
+  repository: josecarlosjr/it-wiki
   pullPolicy: IfNotPresent
   tag: latest
 
