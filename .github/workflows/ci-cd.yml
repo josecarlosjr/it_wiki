@@ -103,21 +103,30 @@ jobs:
           IMAGE_REPOSITORY: ${{ steps.meta.outputs.repository }}
           IMAGE_TAG: ${{ steps.meta.outputs.tag }}
         run: |
+          set -euo pipefail
+
+          VALUES_FILE="infrastructure/helm/it-wiki/values-prod.yaml"
+          TEMP_FILE="$(mktemp)"
+          trap 'rm -f "$TEMP_FILE"' EXIT
+
           docker run --rm \
             --env IMAGE_REPOSITORY \
             --env IMAGE_TAG \
-            --volume "$PWD:/workdir" \
+            --volume "$PWD:/workdir:ro" \
             mikefarah/yq:4.45.4 \
-            -i \
             '.image.repository = strenv(IMAGE_REPOSITORY) | .image.tag = strenv(IMAGE_TAG)' \
-            /workdir/infrastructure/helm/it-wiki/values-prod.yaml
+            "/workdir/${VALUES_FILE}" > "$TEMP_FILE"
+
+          test -s "$TEMP_FILE"
+          mv "$TEMP_FILE" "$VALUES_FILE"
+          trap - EXIT
 
           echo "Updated production image reference:"
           docker run --rm \
-            --volume "$PWD:/workdir" \
+            --volume "$PWD:/workdir:ro" \
             mikefarah/yq:4.45.4 \
             '.image' \
-            /workdir/infrastructure/helm/it-wiki/values-prod.yaml
+            "/workdir/${VALUES_FILE}"
 
       - name: Commit GitOps image reference
         shell: bash
