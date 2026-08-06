@@ -1,0 +1,97 @@
+.interactive-accordion {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.25rem;
+}
+
+.interactive-accordion-item {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+}
+
+.interactive-accordion-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.interactive-accordion-trigger:hover,
+.interactive-accordion-trigger:focus-visible {
+  background: rgba(96, 165, 250, 0.08);
+  outline: none;
+}
+
+.interactive-accordion-trigger > span:first-child {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.interactive-accordion-trigger small {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.interactive-accordion-content {
+  padding: 0 1.1rem 1.2rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.topic-diagram {
+  margin: 1.2rem 0 0;
+  overflow-x: auto;
+  border: 1px solid rgba(94, 234, 212, 0.28);
+  border-radius: 16px;
+  padding: 1rem;
+  background: rgba(5, 18, 32, 0.88);
+  color: #5eead4;
+}
+
+.topic-diagram figcaption {
+  margin-bottom: 0.65rem;
+  color: var(--text);
+  font-weight: 750;
+}
+
+.topic-diagram svg {
+  min-width: 720px;
+  width: 100%;
+  height: auto;
+}
+
+.topic-diagram-node {
+  fill: #10283e;
+  stroke: #60a5fa;
+  stroke-width: 2;
+}
+
+.topic-diagram-label {
+  fill: #edf6ff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.topic-diagram-edge {
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-dasharray: 10 8;
+  animation: topic-flow 1.2s linear infinite;
+}
+
+@keyframes topic-flow {
+  to { stroke-dashoffset: -36; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topic-diagram-edge { animation: none; }
+}
