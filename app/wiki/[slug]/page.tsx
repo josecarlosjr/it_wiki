@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { wikiArticleBySlug, wikiArticles, type WikiArticle } from "@/content/wiki";
+import { WikiArticleAccordions } from "@/components/wiki-article-accordions";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -77,27 +78,10 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
           </div>
         </section>
 
-        {article.sections.map((section) => (
-          <section className="article-section" id={section.id} key={section.id}>
-            <div className="section-heading">
-              <h2>{section.title}</h2>
-              <span className={`level level-${section.level.toLowerCase()}`}>{section.level}</span>
-            </div>
-            <p className="section-summary">{section.summary}</p>
-            <ul className="knowledge-list">
-              {section.points.map((point) => <li key={point}>{point}</li>)}
-            </ul>
-          </section>
-        ))}
-
-        <section className="article-section" id="entrevista">
-          <h2>Perguntas comuns em entrevistas</h2>
-          <div className="interview-list">
-            {article.interviewQuestions.map((question) => (
-              <div className="interview-question" key={question}>{question}</div>
-            ))}
-          </div>
-        </section>
+        <WikiArticleAccordions
+          sections={article.sections}
+          interviewQuestions={article.interviewQuestions}
+        />
 
         <section className="article-section" id="relacionados">
           <h2>Artigos relacionados</h2>
