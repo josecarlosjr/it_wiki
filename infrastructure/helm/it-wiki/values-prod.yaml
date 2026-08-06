@@ -14,7 +14,7 @@ ingress:
   tls:
     - secretName: it-wiki-tls
       hosts:
-        - it-wiki.example.com
+        - it-wiki.home.arpa
 autoscaling:
   enabled: true
   minReplicas: 2
