@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import "./wiki.css";
 
 export const metadata: Metadata = {
   title: {
     default: "IT_WIKI",
     template: "%s | IT_WIKI",
   },
-  description: "Aprenda infraestrutura, cloud e sistemas distribuídos com diagramas interativos.",
+  description: "Enciclopédia técnica aberta sobre infraestrutura, cloud, redes e sistemas distribuídos.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -21,13 +22,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <span>IT_WIKI</span>
             </Link>
             <nav className="nav" aria-label="Navegação principal">
-              <Link href="/trilhas/">Trilhas</Link>
-              <Link href="/aprender/kubernetes-service/">Aulas</Link>
+              <Link href="/wiki/">Enciclopédia</Link>
+              <Link href="/wiki/kubernetes/">Kubernetes</Link>
+              <Link href="/wiki/redes/">Redes</Link>
               <Link href="/entrevistas/">Entrevistas</Link>
             </nav>
           </header>
           {children}
-          <footer className="footer">IT_WIKI · conhecimento técnico explicado visualmente</footer>
+          <footer className="footer">IT_WIKI · enciclopédia técnica aberta e visual</footer>
         </div>
       </body>
     </html>

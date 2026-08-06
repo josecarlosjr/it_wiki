@@ -1,25 +1,35 @@
 import Link from "next/link";
-import { topics } from "@/content/catalog";
+import { wikiArticles, wikiCategories } from "@/content/wiki";
 
-export const metadata = { title: "Trilhas" };
+export const metadata = { title: "Índice de assuntos" };
 
-export default function TrailsPage() {
+export default function SubjectIndexPage() {
   return (
     <main className="main">
-      <p className="eyebrow">Catálogo</p>
-      <h1>Trilhas de aprendizagem</h1>
-      <p className="lead">Cada trilha avança de fundamentos para arquitetura, operação e diagnóstico.</p>
-      <section className="grid section">
-        {topics.map((topic) => (
-          <article className="card" key={topic.slug}>
-            <p className="card-meta">{topic.level}</p>
-            <h2>{topic.title}</h2>
-            <p>{topic.description}</p>
-            <p>{topic.lessons} aulas · {topic.status}</p>
-            {topic.slug === "kubernetes" && (
-              <Link className="button primary" href="/aprender/kubernetes-service/">Abrir aula</Link>
-            )}
-          </article>
+      <p className="eyebrow">Índice aberto</p>
+      <h1>Assuntos técnicos</h1>
+      <p className="lead">
+        A IT_WIKI não exige uma trilha obrigatória. Abra qualquer assunto e consulte diretamente
+        fundamentos, operação, arquitetura ou conteúdo de especialista.
+      </p>
+
+      <section className="section">
+        {wikiCategories.map((category) => (
+          <div className="subject-group" key={category}>
+            <h2>{category}</h2>
+            <div className="grid">
+              {wikiArticles
+                .filter((article) => article.category === category)
+                .map((article) => (
+                  <article className="card" key={article.slug}>
+                    <h3>{article.title}</h3>
+                    <p>{article.summary}</p>
+                    <p className="card-meta">Fundamentos · Intermediário · Avançado · Especialista</p>
+                    <Link className="button" href={`/wiki/${article.slug}/`}>Abrir artigo</Link>
+                  </article>
+                ))}
+            </div>
+          </div>
         ))}
       </section>
     </main>
