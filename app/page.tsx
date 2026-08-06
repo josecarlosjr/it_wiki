@@ -1,46 +1,61 @@
 import Link from "next/link";
-import { ArrowRight, Boxes, Network, ShieldCheck } from "lucide-react";
-import { topics } from "@/content/catalog";
+import { BookOpen, Boxes, Network, ShieldCheck } from "lucide-react";
+import { wikiArticles, wikiCategories } from "@/content/wiki";
 
 export default function HomePage() {
+  const featured = wikiArticles.slice(0, 9);
+
   return (
     <main className="main">
-      <section className="hero">
+      <section className="hero wiki-hero">
         <div>
-          <p className="eyebrow">Aprendizagem visual para infraestrutura e cloud</p>
-          <h1>Entenda sistemas complexos sem decorar respostas.</h1>
+          <p className="eyebrow">Enciclopédia técnica aberta</p>
+          <h1>Conhecimento de TI para consulta, não um curso fechado.</h1>
           <p className="lead">
-            A IT_WIKI explica conceitos de TI em camadas, conecta teoria a cenários reais e usa
-            diagramas animados para mostrar o que acontece dentro da arquitetura.
+            Pesquise assuntos isoladamente, navegue entre conceitos relacionados e consulte cada
+            artigo no nível necessário: fundamentos, intermediário, avançado ou especialista.
           </p>
           <div className="actions">
-            <Link className="button primary" href="/aprender/kubernetes-service/">
-              Iniciar primeira aula <ArrowRight size={18} />
+            <Link className="button primary" href="/wiki/">
+              Abrir enciclopédia <BookOpen size={18} />
             </Link>
-            <Link className="button" href="/trilhas/">Explorar trilhas</Link>
+            <Link className="button" href="/wiki/kubernetes/">Consultar Kubernetes</Link>
           </div>
         </div>
-        <div className="panel">
+
+        <aside className="panel wiki-summary">
+          <strong>Conteúdo liberado</strong>
           <div className="stat-grid">
-            <div className="stat"><strong>3</strong><span>modos de estudo</span></div>
-            <div className="stat"><strong>35+</strong><span>aulas planejadas</span></div>
-            <div className="stat"><strong>10</strong><span>diagramas MVP</span></div>
-            <div className="stat"><strong>30</strong><span>perguntas técnicas</span></div>
+            <div className="stat"><strong>{wikiArticles.length}</strong><span>artigos completos</span></div>
+            <div className="stat"><strong>{wikiCategories.length}</strong><span>áreas técnicas</span></div>
+            <div className="stat"><strong>4</strong><span>níveis por artigo</span></div>
+            <div className="stat"><strong>100%</strong><span>acesso aberto</span></div>
           </div>
-          <p className="lead">Aprenda por conceito, fluxo arquitetural, troubleshooting e entrevista.</p>
-        </div>
+          <p className="lead">
+            Não há aulas bloqueadas, progresso obrigatório ou conteúdo marcado apenas como planejado.
+          </p>
+        </aside>
       </section>
 
       <section className="section">
-        <p className="eyebrow">Trilhas</p>
-        <h2>Fundamentos antes da complexidade</h2>
+        <div className="category-title">
+          <div>
+            <p className="eyebrow">Artigos em destaque</p>
+            <h2>Consulte diretamente o assunto necessário</h2>
+          </div>
+          <Link className="read-link" href="/wiki/">Ver índice completo →</Link>
+        </div>
+
         <div className="grid">
-          {topics.slice(0, 6).map((topic) => (
-            <article className="card" key={topic.slug}>
-              <p className="card-meta">{topic.level} · {topic.lessons} aulas</p>
-              <h3>{topic.title}</h3>
-              <p>{topic.description}</p>
-              <span className="pill">{topic.status}</span>
+          {featured.map((article) => (
+            <article className="card wiki-card" key={article.slug}>
+              <p className="card-meta">{article.category}</p>
+              <Link href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></Link>
+              <p>{article.summary}</p>
+              <div className="concept-list">
+                {article.concepts.slice(0, 4).map((concept) => <span key={concept}>{concept}</span>)}
+              </div>
+              <Link className="read-link" href={`/wiki/${article.slug}/`}>Abrir artigo →</Link>
             </article>
           ))}
         </div>
@@ -49,18 +64,18 @@ export default function HomePage() {
       <section className="section grid">
         <article className="card">
           <Boxes />
-          <h3>Arquitetura interativa</h3>
-          <p>Execute cada fluxo passo a passo e veja os componentes envolvidos.</p>
+          <h3>Do básico ao especialista</h3>
+          <p>Cada assunto contém explicação progressiva sem exigir uma sequência de curso.</p>
         </article>
         <article className="card">
           <Network />
-          <h3>Troubleshooting orientado</h3>
-          <p>Parta do sintoma, formule hipóteses e valide evidências com comandos reais.</p>
+          <h3>Conceitos relacionados</h3>
+          <p>Links entre artigos ajudam a seguir dependências técnicas e arquiteturais.</p>
         </article>
         <article className="card">
           <ShieldCheck />
-          <h3>Preparação para entrevistas</h3>
-          <p>Respostas curtas, aprofundamento técnico e perguntas de seguimento.</p>
+          <h3>Uso prático</h3>
+          <p>Os artigos incluem operação, troubleshooting e perguntas comuns de entrevistas.</p>
         </article>
       </section>
     </main>
