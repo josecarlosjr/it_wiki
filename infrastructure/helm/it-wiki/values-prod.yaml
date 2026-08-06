@@ -5,9 +5,9 @@ ingress:
   enabled: true
   className: nginx
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: internal-ca
   hosts:
-    - host: it-wiki.example.com
+    - host: it-wiki.home.arpa
       paths:
         - path: /
           pathType: Prefix
