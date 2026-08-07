@@ -6,6 +6,7 @@ import { WikiArticleAccordions } from "@/components/wiki-article-accordions";
 import { DockerfileExamples } from "@/components/dockerfile-examples";
 import { LinuxCommandReference } from "@/components/linux-command-reference";
 import { NetworkReference } from "@/components/network-reference";
+import { AutomationIacReference } from "@/components/automation-iac-reference";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -42,6 +43,7 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
   const relatedArticles = article.related
     .map((relatedSlug) => wikiArticleBySlug[relatedSlug])
     .filter((related): related is WikiArticle => Boolean(related));
+  const hasAutomationReference = ["helm", "terraform", "ansible", "cicd"].includes(article.slug);
 
   return (
     <main className="main wiki-article-layout">
@@ -56,6 +58,7 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         {article.slug === "redes" ? <a href="#network-vpn">VPN</a> : null}
         {article.slug === "redes" ? <a href="#network-two-networks">Duas redes</a> : null}
         {article.slug === "redes" ? <a href="#network-ports">Portas e protocolos</a> : null}
+        {hasAutomationReference ? <a href="#automation-iac-reference">Guia prático</a> : null}
         <a href="#entrevista">Entrevista</a>
         <a href="#relacionados">Artigos relacionados</a>
         <Link className="back-link" href="/wiki/">← Índice completo</Link>
@@ -95,6 +98,7 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         {article.slug === "docker" ? <DockerfileExamples /> : null}
         {article.slug === "linux" ? <LinuxCommandReference /> : null}
         {article.slug === "redes" ? <NetworkReference /> : null}
+        {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>Artigos relacionados</h2>
