@@ -1,9 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { WikiSection } from '@/content/wiki';
 import { getInterviewVisual, getSectionDiagram } from '@/content/diagrams';
 import { getDockerLinuxInterviewVisual, getDockerLinuxSectionDiagram } from '@/content/docker-linux-diagrams';
+import {
+  getNetworkSecurityExtraQuestions,
+  getNetworkSecurityInterviewVisual,
+  getNetworkSecuritySectionDiagram,
+} from '@/content/network-security-diagrams';
 import { TopicDiagram } from './topic-diagram';
 
 type Props = {
@@ -27,16 +32,24 @@ function answerFallback(question: string) {
 }
 
 function sectionDiagram(articleSlug: string, sectionId: string) {
-  return getDockerLinuxSectionDiagram(articleSlug, sectionId) ?? getSectionDiagram(articleSlug, sectionId);
+  return getNetworkSecuritySectionDiagram(articleSlug, sectionId)
+    ?? getDockerLinuxSectionDiagram(articleSlug, sectionId)
+    ?? getSectionDiagram(articleSlug, sectionId);
 }
 
 function interviewVisual(articleSlug: string, question: string) {
-  return getDockerLinuxInterviewVisual(articleSlug, question) ?? getInterviewVisual(articleSlug, question);
+  return getNetworkSecurityInterviewVisual(articleSlug, question)
+    ?? getDockerLinuxInterviewVisual(articleSlug, question)
+    ?? getInterviewVisual(articleSlug, question);
 }
 
 export function WikiArticleAccordions({ articleSlug, sections, interviewQuestions }: Props) {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
+  const questions = useMemo(
+    () => Array.from(new Set([...interviewQuestions, ...getNetworkSecurityExtraQuestions(articleSlug)])),
+    [articleSlug, interviewQuestions],
+  );
 
   return (
     <>
@@ -86,7 +99,7 @@ export function WikiArticleAccordions({ articleSlug, sections, interviewQuestion
         <h2>Perguntas comuns em entrevistas</h2>
         <p className="section-summary">As respostas e representações visuais específicas são publicadas gradualmente após revisão técnica.</p>
         <div className="interactive-accordion">
-          {interviewQuestions.map((question, index) => {
+          {questions.map((question, index) => {
             const isOpen = openQuestion === index;
             const visual = interviewVisual(articleSlug, question);
             return (
