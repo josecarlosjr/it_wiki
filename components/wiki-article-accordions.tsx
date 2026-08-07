@@ -2,41 +2,30 @@
 
 import { useState } from 'react';
 import type { WikiSection } from '@/content/wiki';
+import { getInterviewVisual, getSectionDiagram } from '@/content/diagrams';
 import { TopicDiagram } from './topic-diagram';
 
 type Props = {
+  articleSlug: string;
   sections: WikiSection[];
   interviewQuestions: string[];
 };
 
-function answerFor(question: string) {
+function answerFallback(question: string) {
   const normalized = question.toLowerCase();
 
   if (normalized.includes('diferença')) {
-    return 'Comece definindo cada conceito, compare responsabilidade, estado, ciclo de vida e cenário de uso. Termine com um exemplo prático e uma limitação de cada alternativa.';
+    return 'Estruture a resposta definindo cada conceito, comparando responsabilidades, estado, ciclo de vida e cenário de uso. Este artigo ainda aguarda uma resposta editorial específica para esta pergunta.';
   }
 
   if (normalized.includes('como investigar') || normalized.includes('troubleshooting')) {
-    return 'Estruture a investigação por camadas: confirme o sintoma, verifique estado e eventos, valide dependências, rede e permissões, correlacione logs e métricas e só então altere o ambiente.';
+    return 'Estruture a investigação por camadas, partindo do sintoma e das dependências mais próximas antes de alterar o ambiente. Este artigo ainda aguarda uma resposta editorial específica para esta pergunta.';
   }
 
-  if (normalized.includes('o que acontece')) {
-    return 'Explique o fluxo em ordem temporal: evento inicial, componente que detecta a mudança, reconciliação ou decisão, efeito observável e condições que podem impedir a recuperação.';
-  }
-
-  if (normalized.includes('como')) {
-    return 'Apresente objetivo, pré-requisitos, sequência de implementação, mecanismos de validação, riscos e estratégia de rollback. Uma resposta forte conecta a decisão ao impacto operacional.';
-  }
-
-  return 'Defina o conceito, descreva os componentes envolvidos, explique o fluxo principal e acrescente um exemplo, uma limitação e a forma de validar o comportamento em produção.';
+  return 'Esta resposta ainda está em revisão editorial. O conteúdo genérico foi mantido apenas como orientação de estrutura; nenhum diagrama é publicado até que a representação técnica seja revisada para este assunto.';
 }
 
-function labelsForSection(section: WikiSection) {
-  const firstPoint = section.points[0] ?? section.title;
-  return ['Entrada', section.title, firstPoint, 'Resultado'];
-}
-
-export function WikiArticleAccordions({ sections, interviewQuestions }: Props) {
+export function WikiArticleAccordions({ articleSlug, sections, interviewQuestions }: Props) {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
 
@@ -44,10 +33,11 @@ export function WikiArticleAccordions({ sections, interviewQuestions }: Props) {
     <>
       <section className="article-section" aria-labelledby="topicos-heading">
         <h2 id="topicos-heading">Tópicos</h2>
-        <p className="section-summary">Selecione um tópico para abrir a explicação detalhada e o diagrama arquitetural.</p>
+        <p className="section-summary">Selecione um tópico para abrir a explicação. Diagramas só são exibidos quando existe uma representação específica revisada para o assunto.</p>
         <div className="interactive-accordion">
           {sections.map((section) => {
             const isOpen = openSection === section.id;
+            const diagram = getSectionDiagram(articleSlug, section.id);
             return (
               <section className="interactive-accordion-item" id={section.id} key={section.id}>
                 <button
@@ -68,7 +58,13 @@ export function WikiArticleAccordions({ sections, interviewQuestions }: Props) {
                     <ul className="knowledge-list">
                       {section.points.map((point) => <li key={point}>{point}</li>)}
                     </ul>
-                    <TopicDiagram title={section.title} labels={labelsForSection(section)} />
+                    {diagram ? (
+                      <TopicDiagram spec={diagram} />
+                    ) : (
+                      <div className="diagram-review-note" role="note">
+                        Diagrama temporariamente oculto: este tópico ainda precisa de revisão arquitetural específica.
+                      </div>
+                    )}
                   </div>
                 ) : null}
               </section>
@@ -79,10 +75,11 @@ export function WikiArticleAccordions({ sections, interviewQuestions }: Props) {
 
       <section className="article-section" id="entrevista">
         <h2>Perguntas comuns em entrevistas</h2>
-        <p className="section-summary">Abra cada pergunta para consultar uma estrutura de resposta e um diagrama de raciocínio.</p>
+        <p className="section-summary">As respostas e representações visuais específicas são publicadas gradualmente após revisão técnica.</p>
         <div className="interactive-accordion">
           {interviewQuestions.map((question, index) => {
             const isOpen = openQuestion === index;
+            const visual = getInterviewVisual(articleSlug, question);
             return (
               <section className="interactive-accordion-item" key={question}>
                 <button
@@ -96,8 +93,14 @@ export function WikiArticleAccordions({ sections, interviewQuestions }: Props) {
                 </button>
                 {isOpen ? (
                   <div className="interactive-accordion-content">
-                    <p>{answerFor(question)}</p>
-                    <TopicDiagram title={question} labels={['Conceito', 'Comparação', 'Exemplo', 'Validação']} />
+                    <p>{visual?.answer ?? answerFallback(question)}</p>
+                    {visual ? (
+                      <TopicDiagram spec={visual.diagram} />
+                    ) : (
+                      <div className="diagram-review-note" role="note">
+                        Diagrama ainda não publicado para esta pergunta. Evitamos usar um fluxo genérico que possa sugerir uma arquitetura incorreta.
+                      </div>
+                    )}
                   </div>
                 ) : null}
               </section>
