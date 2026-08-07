@@ -79,6 +79,7 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         </section>
 
         <WikiArticleAccordions
+          articleSlug={article.slug}
           sections={article.sections}
           interviewQuestions={article.interviewQuestions}
         />
