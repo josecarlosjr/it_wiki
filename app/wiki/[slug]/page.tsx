@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { wikiArticleBySlug, wikiArticles, type WikiArticle } from "@/content/wiki";
 import { WikiArticleAccordions } from "@/components/wiki-article-accordions";
+import { DockerfileExamples } from "@/components/dockerfile-examples";
+import { LinuxCommandReference } from "@/components/linux-command-reference";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -48,6 +50,8 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         {article.sections.map((section) => (
           <a href={`#${section.id}`} key={section.id}>{section.title}</a>
         ))}
+        {article.slug === "docker" ? <a href="#dockerfile-examples">Exemplos de Dockerfile</a> : null}
+        {article.slug === "linux" ? <a href="#linux-commands">Comandos avançados</a> : null}
         <a href="#entrevista">Entrevista</a>
         <a href="#relacionados">Artigos relacionados</a>
         <Link className="back-link" href="/wiki/">← Índice completo</Link>
@@ -83,6 +87,9 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
           sections={article.sections}
           interviewQuestions={article.interviewQuestions}
         />
+
+        {article.slug === "docker" ? <DockerfileExamples /> : null}
+        {article.slug === "linux" ? <LinuxCommandReference /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>Artigos relacionados</h2>

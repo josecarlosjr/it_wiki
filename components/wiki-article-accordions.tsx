@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { WikiSection } from '@/content/wiki';
 import { getInterviewVisual, getSectionDiagram } from '@/content/diagrams';
+import { getDockerLinuxInterviewVisual, getDockerLinuxSectionDiagram } from '@/content/docker-linux-diagrams';
 import { TopicDiagram } from './topic-diagram';
 
 type Props = {
@@ -25,6 +26,14 @@ function answerFallback(question: string) {
   return 'Esta resposta ainda está em revisão editorial. O conteúdo genérico foi mantido apenas como orientação de estrutura; nenhum diagrama é publicado até que a representação técnica seja revisada para este assunto.';
 }
 
+function sectionDiagram(articleSlug: string, sectionId: string) {
+  return getDockerLinuxSectionDiagram(articleSlug, sectionId) ?? getSectionDiagram(articleSlug, sectionId);
+}
+
+function interviewVisual(articleSlug: string, question: string) {
+  return getDockerLinuxInterviewVisual(articleSlug, question) ?? getInterviewVisual(articleSlug, question);
+}
+
 export function WikiArticleAccordions({ articleSlug, sections, interviewQuestions }: Props) {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
@@ -37,7 +46,7 @@ export function WikiArticleAccordions({ articleSlug, sections, interviewQuestion
         <div className="interactive-accordion">
           {sections.map((section) => {
             const isOpen = openSection === section.id;
-            const diagram = getSectionDiagram(articleSlug, section.id);
+            const diagram = sectionDiagram(articleSlug, section.id);
             return (
               <section className="interactive-accordion-item" id={section.id} key={section.id}>
                 <button
@@ -79,7 +88,7 @@ export function WikiArticleAccordions({ articleSlug, sections, interviewQuestion
         <div className="interactive-accordion">
           {interviewQuestions.map((question, index) => {
             const isOpen = openQuestion === index;
-            const visual = getInterviewVisual(articleSlug, question);
+            const visual = interviewVisual(articleSlug, question);
             return (
               <section className="interactive-accordion-item" key={question}>
                 <button
