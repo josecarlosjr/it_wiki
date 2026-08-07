@@ -5,6 +5,7 @@ import { wikiArticleBySlug, wikiArticles, type WikiArticle } from "@/content/wik
 import { WikiArticleAccordions } from "@/components/wiki-article-accordions";
 import { DockerfileExamples } from "@/components/dockerfile-examples";
 import { LinuxCommandReference } from "@/components/linux-command-reference";
+import { NetworkReference } from "@/components/network-reference";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -52,6 +53,9 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         ))}
         {article.slug === "docker" ? <a href="#dockerfile-examples">Exemplos de Dockerfile</a> : null}
         {article.slug === "linux" ? <a href="#linux-commands">Comandos avançados</a> : null}
+        {article.slug === "redes" ? <a href="#network-vpn">VPN</a> : null}
+        {article.slug === "redes" ? <a href="#network-two-networks">Duas redes</a> : null}
+        {article.slug === "redes" ? <a href="#network-ports">Portas e protocolos</a> : null}
         <a href="#entrevista">Entrevista</a>
         <a href="#relacionados">Artigos relacionados</a>
         <Link className="back-link" href="/wiki/">← Índice completo</Link>
@@ -90,6 +94,7 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
 
         {article.slug === "docker" ? <DockerfileExamples /> : null}
         {article.slug === "linux" ? <LinuxCommandReference /> : null}
+        {article.slug === "redes" ? <NetworkReference /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>Artigos relacionados</h2>
