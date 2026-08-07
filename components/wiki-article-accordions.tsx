@@ -9,6 +9,12 @@ import {
   getNetworkSecurityInterviewVisual,
   getNetworkSecuritySectionDiagram,
 } from '@/content/network-security-diagrams';
+import {
+  getAutomationIacExtraQuestions,
+  getAutomationIacInterviewVisual,
+  getAutomationIacSectionDiagram,
+} from '@/content/automation-iac-diagrams';
+import { getAutomationIacCoreInterviewVisual } from '@/content/automation-iac-interviews';
 import { TopicDiagram } from './topic-diagram';
 
 type Props = {
@@ -32,13 +38,16 @@ function answerFallback(question: string) {
 }
 
 function sectionDiagram(articleSlug: string, sectionId: string) {
-  return getNetworkSecuritySectionDiagram(articleSlug, sectionId)
+  return getAutomationIacSectionDiagram(articleSlug, sectionId)
+    ?? getNetworkSecuritySectionDiagram(articleSlug, sectionId)
     ?? getDockerLinuxSectionDiagram(articleSlug, sectionId)
     ?? getSectionDiagram(articleSlug, sectionId);
 }
 
 function interviewVisual(articleSlug: string, question: string) {
-  return getNetworkSecurityInterviewVisual(articleSlug, question)
+  return getAutomationIacCoreInterviewVisual(articleSlug, question)
+    ?? getAutomationIacInterviewVisual(articleSlug, question)
+    ?? getNetworkSecurityInterviewVisual(articleSlug, question)
     ?? getDockerLinuxInterviewVisual(articleSlug, question)
     ?? getInterviewVisual(articleSlug, question);
 }
@@ -47,7 +56,11 @@ export function WikiArticleAccordions({ articleSlug, sections, interviewQuestion
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
   const questions = useMemo(
-    () => Array.from(new Set([...interviewQuestions, ...getNetworkSecurityExtraQuestions(articleSlug)])),
+    () => Array.from(new Set([
+      ...interviewQuestions,
+      ...getNetworkSecurityExtraQuestions(articleSlug),
+      ...getAutomationIacExtraQuestions(articleSlug),
+    ])),
     [articleSlug, interviewQuestions],
   );
 
