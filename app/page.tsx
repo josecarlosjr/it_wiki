@@ -28,7 +28,7 @@ export default function HomePage() {
             <Link className="button primary" href="/wiki/">
               {t('Abrir enciclopédia', 'Open encyclopedia')} <BookOpen size={18} />
             </Link>
-            <Link className="button" href="/wiki/kubernetes/">{t('Consultar Kubernetes', 'Open Kubernetes')}</Link>
+            <a className="button" href="/wiki/kubernetes/">{t('Consultar Kubernetes', 'Open Kubernetes')}</a>
           </div>
         </div>
 
@@ -59,12 +59,12 @@ export default function HomePage() {
           {featured.map((article) => (
             <article className="card wiki-card" key={article.slug}>
               <p className="card-meta">{article.category}</p>
-              <Link href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></Link>
+              <a href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></a>
               <p>{article.summary}</p>
               <div className="concept-list">
                 {article.concepts.slice(0, 4).map((concept) => <span key={concept}>{concept}</span>)}
               </div>
-              <Link className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</Link>
+              <a className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</a>
             </article>
           ))}
         </div>
