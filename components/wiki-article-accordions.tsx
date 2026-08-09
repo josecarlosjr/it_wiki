@@ -18,6 +18,7 @@ import { getAutomationIacCoreInterviewVisual } from '@/content/automation-iac-in
 import { getAwsExtraQuestions, getAwsInterviewVisual, getAwsSectionDiagram } from '@/content/aws-diagrams';
 import { extraQuestionEn, localizeVisual, technicalTextEn } from '@/content/i18n-technical';
 import { interviewAnswerByQuestionEn } from '@/content/interview-en';
+import { extendedQuestionEn } from '@/content/question-en';
 import { TopicDiagram } from './topic-diagram';
 import { useLanguage } from './language-provider';
 
@@ -118,7 +119,9 @@ export function WikiArticleAccordions({ articleSlug, sections, sectionsEn, inter
         <div className="interactive-accordion">
           {questionsPt.map((sourceQuestion, index) => {
             const isOpen = openQuestion === index;
-            const question = locale === 'en' ? (baseEnglishByPt[sourceQuestion] ?? extraQuestionEn[sourceQuestion] ?? technicalTextEn(sourceQuestion)) : sourceQuestion;
+            const question = locale === 'en'
+              ? (baseEnglishByPt[sourceQuestion] ?? extendedQuestionEn[sourceQuestion] ?? extraQuestionEn[sourceQuestion] ?? technicalTextEn(sourceQuestion))
+              : sourceQuestion;
             const rawVisual = interviewVisual(articleSlug, sourceQuestion);
             const localizedVisual = localizeVisual(rawVisual, locale);
             const visual = localizedVisual && locale === 'en'
@@ -131,7 +134,7 @@ export function WikiArticleAccordions({ articleSlug, sections, sectionsEn, inter
                 </button>
                 {isOpen ? (
                   <div className="interactive-accordion-content">
-                    <p>{visual?.answer ?? interviewAnswerByQuestionEn[sourceQuestion] ?? answerFallback(question, locale === 'en')}</p>
+                    <p>{visual?.answer ?? (locale === 'en' ? interviewAnswerByQuestionEn[sourceQuestion] : undefined) ?? answerFallback(question, locale === 'en')}</p>
                     {visual ? <TopicDiagram spec={visual.diagram} /> : (
                       <div className="diagram-review-note" role="note">{t(
                         'Diagrama ainda não publicado para esta pergunta. Evitamos usar um fluxo genérico que possa sugerir uma arquitetura incorreta.',
