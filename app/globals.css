@@ -41,8 +41,13 @@ code { font-family: "SFMono-Regular", Consolas, monospace; }
   display: grid; place-items: center; width: 2.1rem; height: 2.1rem;
   border-radius: .65rem; background: linear-gradient(135deg, var(--brand), #8b5cf6);
 }
+.header-actions { display: flex; align-items: center; gap: 1rem; }
 .nav { display: flex; gap: 1.2rem; color: var(--muted); }
 .nav a:hover { color: var(--text); }
+.language-switch { display: inline-flex; align-items: center; padding: .2rem; border: 1px solid var(--line); border-radius: .65rem; background: rgba(7,17,31,.65); }
+.language-switch button { min-width: 2.35rem; border: 0; border-radius: .45rem; padding: .4rem .55rem; background: transparent; color: var(--muted); cursor: pointer; font-size: .78rem; font-weight: 800; letter-spacing: .04em; }
+.language-switch button:hover { color: var(--text); }
+.language-switch button.active { background: var(--brand); color: #04101f; }
 
 .main { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 3rem 0 5rem; }
 .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items: center; padding: 3rem 0; }
@@ -91,4 +96,5 @@ h3 { margin-top: 0; }
   .grid { grid-template-columns: 1fr; }
   .sidebar { position: static; }
   .nav { display: none; }
+  .header-actions { gap: .5rem; }
 }

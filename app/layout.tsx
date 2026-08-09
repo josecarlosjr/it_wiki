@@ -1,37 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 import "./wiki.css";
 import "./interactive.css";
+import { LanguageProvider } from "@/components/language-provider";
+import { SiteChrome } from "@/components/site-chrome";
 
 export const metadata: Metadata = {
   title: {
     default: "IT_WIKI",
     template: "%s | IT_WIKI",
   },
-  description: "Enciclopédia técnica aberta sobre infraestrutura, cloud, redes e sistemas distribuídos.",
+  description: "Open technical encyclopedia about infrastructure, cloud, networking and distributed systems / Enciclopédia técnica aberta sobre infraestrutura, cloud, redes e sistemas distribuídos.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-PT" suppressHydrationWarning>
       <body>
-        <div className="shell">
-          <header className="header">
-            <Link className="brand" href="/">
-              <span className="brand-mark">IT</span>
-              <span>IT_WIKI</span>
-            </Link>
-            <nav className="nav" aria-label="Navegação principal">
-              <Link href="/wiki/">Enciclopédia</Link>
-              <Link href="/wiki/kubernetes/">Kubernetes</Link>
-              <Link href="/wiki/redes/">Redes</Link>
-              <Link href="/entrevistas/">Entrevistas</Link>
-            </nav>
-          </header>
-          {children}
-          <footer className="footer">IT_WIKI · enciclopédia técnica aberta e visual</footer>
-        </div>
+        <LanguageProvider>
+          <SiteChrome>{children}</SiteChrome>
+        </LanguageProvider>
       </body>
     </html>
   );
