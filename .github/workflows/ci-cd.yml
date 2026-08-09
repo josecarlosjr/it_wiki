@@ -69,8 +69,17 @@ jobs:
             sleep 1
           done
 
-          mapfile -t SLUGS < <(sed -nE 's/^    slug: ["'"']([^"'"']+)["'"'],?$/\1/p' content/wiki.ts)
+          mapfile -t SLUGS < <(node <<'NODE'
+          const fs = require('node:fs');
+          const source = fs.readFileSync('content/wiki.ts', 'utf8');
+          for (const match of source.matchAll(/slug:\s*["']([^"']+)["']/g)) {
+            console.log(match[1]);
+          }
+          NODE
+          )
+
           test "${#SLUGS[@]}" -gt 0
+          echo "Found ${#SLUGS[@]} article routes to validate."
 
           for slug in "${SLUGS[@]}"; do
             url="http://127.0.0.1:18080/wiki/${slug}/"
