@@ -1,6 +1,5 @@
 'use client';
 
-import Link from "next/link";
 import { wikiArticles, wikiCategories } from "@/content/wiki";
 import { wikiArticlesEn, wikiCategoriesEn } from "@/content/wiki-en";
 import { useLanguage } from "@/components/language-provider";
@@ -44,13 +43,13 @@ export default function WikiIndexPage() {
               {articles.map((article) => (
                 <article className="wiki-list-item" key={article.slug}>
                   <div>
-                    <Link href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></Link>
+                    <a href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></a>
                     <p>{article.summary}</p>
                     <div className="concept-list">
                       {article.concepts.slice(0, 6).map((concept) => <span key={concept}>{concept}</span>)}
                     </div>
                   </div>
-                  <Link className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</Link>
+                  <a className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</a>
                 </article>
               ))}
             </div>
