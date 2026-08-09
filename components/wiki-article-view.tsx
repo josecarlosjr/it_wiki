@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { WikiArticle } from '@/content/wiki';
 import { useLanguage } from './language-provider';
+import { HardLink } from './hard-link';
 import { WikiArticleAccordions } from './wiki-article-accordions';
 import { DockerfileExamples } from './dockerfile-examples';
 import { LinuxCommandReference } from './linux-command-reference';
@@ -85,11 +86,11 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
           <h2>{t('Artigos relacionados', 'Related articles')}</h2>
           <div className="related-grid">
             {relatedArticles.map((related) => (
-              <Link className="related-card" href={`/wiki/${related.slug}/`} key={related.slug}>
+              <HardLink className="related-card" href={`/wiki/${related.slug}/`} key={related.slug}>
                 <span>{related.category}</span>
                 <strong>{related.title}</strong>
                 <p>{related.summary}</p>
-              </Link>
+              </HardLink>
             ))}
           </div>
         </section>

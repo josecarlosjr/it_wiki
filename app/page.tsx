@@ -5,6 +5,7 @@ import { BookOpen, Boxes, Network, ShieldCheck } from "lucide-react";
 import { wikiArticles, wikiCategories } from "@/content/wiki";
 import { wikiArticlesEn, wikiCategoriesEn } from "@/content/wiki-en";
 import { useLanguage } from "@/components/language-provider";
+import { HardLink } from "@/components/hard-link";
 
 export default function HomePage() {
   const { locale, t } = useLanguage();
@@ -28,7 +29,7 @@ export default function HomePage() {
             <Link className="button primary" href="/wiki/">
               {t('Abrir enciclopédia', 'Open encyclopedia')} <BookOpen size={18} />
             </Link>
-            <Link className="button" href="/wiki/kubernetes/">{t('Consultar Kubernetes', 'Open Kubernetes')}</Link>
+            <HardLink className="button" href="/wiki/kubernetes/">{t('Consultar Kubernetes', 'Open Kubernetes')}</HardLink>
           </div>
         </div>
 
@@ -59,12 +60,12 @@ export default function HomePage() {
           {featured.map((article) => (
             <article className="card wiki-card" key={article.slug}>
               <p className="card-meta">{article.category}</p>
-              <Link href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></Link>
+              <HardLink href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></HardLink>
               <p>{article.summary}</p>
               <div className="concept-list">
                 {article.concepts.slice(0, 4).map((concept) => <span key={concept}>{concept}</span>)}
               </div>
-              <Link className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</Link>
+              <HardLink className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</HardLink>
             </article>
           ))}
         </div>

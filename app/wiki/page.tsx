@@ -1,9 +1,9 @@
 'use client';
 
-import Link from "next/link";
 import { wikiArticles, wikiCategories } from "@/content/wiki";
 import { wikiArticlesEn, wikiCategoriesEn } from "@/content/wiki-en";
 import { useLanguage } from "@/components/language-provider";
+import { HardLink } from "@/components/hard-link";
 
 export default function WikiIndexPage() {
   const { locale, t } = useLanguage();
@@ -44,13 +44,13 @@ export default function WikiIndexPage() {
               {articles.map((article) => (
                 <article className="wiki-list-item" key={article.slug}>
                   <div>
-                    <Link href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></Link>
+                    <HardLink href={`/wiki/${article.slug}/`}><h3>{article.title}</h3></HardLink>
                     <p>{article.summary}</p>
                     <div className="concept-list">
                       {article.concepts.slice(0, 6).map((concept) => <span key={concept}>{concept}</span>)}
                     </div>
                   </div>
-                  <Link className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</Link>
+                  <HardLink className="read-link" href={`/wiki/${article.slug}/`}>{t('Abrir artigo →', 'Open article →')}</HardLink>
                 </article>
               ))}
             </div>
