@@ -50,6 +50,36 @@ jobs:
       - name: Validate Docker build
         run: docker build --tag it-wiki:ci .
 
+      - name: Smoke test all wiki article routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTAINER_ID="$(docker run -d -p 18080:8080 it-wiki:ci)"
+          trap 'docker rm -f "$CONTAINER_ID" >/dev/null 2>&1 || true' EXIT
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:18080/healthz >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "Nginx container did not become healthy"
+              docker logs "$CONTAINER_ID"
+              exit 1
+            fi
+            sleep 1
+          done
+
+          mapfile -t SLUGS < <(sed -nE 's/^    slug: ["'"']([^"'"']+)["'"'],?$/\1/p' content/wiki.ts)
+          test "${#SLUGS[@]}" -gt 0
+
+          for slug in "${SLUGS[@]}"; do
+            url="http://127.0.0.1:18080/wiki/${slug}/"
+            echo "Checking ${url}"
+            curl --fail --silent --show-error --location "$url" >/dev/null
+          done
+
+          echo "Validated ${#SLUGS[@]} wiki article routes through Nginx."
+
   release:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: validate
