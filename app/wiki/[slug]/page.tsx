@@ -7,6 +7,7 @@ import { DockerfileExamples } from "@/components/dockerfile-examples";
 import { LinuxCommandReference } from "@/components/linux-command-reference";
 import { NetworkReference } from "@/components/network-reference";
 import { AutomationIacReference } from "@/components/automation-iac-reference";
+import { AwsReference } from "@/components/aws-reference";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -59,6 +60,15 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         {article.slug === "redes" ? <a href="#network-two-networks">Duas redes</a> : null}
         {article.slug === "redes" ? <a href="#network-ports">Portas e protocolos</a> : null}
         {hasAutomationReference ? <a href="#automation-iac-reference">Guia prático</a> : null}
+        {article.slug === "aws" ? <a href="#aws-iam">IAM Roles</a> : null}
+        {article.slug === "aws" ? <a href="#aws-s3">S3</a> : null}
+        {article.slug === "aws" ? <a href="#aws-rds">RDS</a> : null}
+        {article.slug === "aws" ? <a href="#aws-lambda">Lambda</a> : null}
+        {article.slug === "aws" ? <a href="#aws-ecs">ECS</a> : null}
+        {article.slug === "aws" ? <a href="#aws-eks">EKS</a> : null}
+        {article.slug === "aws" ? <a href="#aws-messaging">SNS / SQS</a> : null}
+        {article.slug === "aws" ? <a href="#aws-vpc-hybrid">VPC híbrida</a> : null}
+        {article.slug === "aws" ? <a href="#aws-vpn">AWS VPN</a> : null}
         <a href="#entrevista">Entrevista</a>
         <a href="#relacionados">Artigos relacionados</a>
         <Link className="back-link" href="/wiki/">← Índice completo</Link>
@@ -99,6 +109,7 @@ export default async function WikiArticlePage({ params }: ArticlePageProps) {
         {article.slug === "linux" ? <LinuxCommandReference /> : null}
         {article.slug === "redes" ? <NetworkReference /> : null}
         {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
+        {article.slug === "aws" ? <AwsReference /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>Artigos relacionados</h2>

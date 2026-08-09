@@ -15,6 +15,7 @@ import {
   getAutomationIacSectionDiagram,
 } from '@/content/automation-iac-diagrams';
 import { getAutomationIacCoreInterviewVisual } from '@/content/automation-iac-interviews';
+import { getAwsExtraQuestions, getAwsInterviewVisual, getAwsSectionDiagram } from '@/content/aws-diagrams';
 import { TopicDiagram } from './topic-diagram';
 
 type Props = {
@@ -38,14 +39,16 @@ function answerFallback(question: string) {
 }
 
 function sectionDiagram(articleSlug: string, sectionId: string) {
-  return getAutomationIacSectionDiagram(articleSlug, sectionId)
+  return getAwsSectionDiagram(articleSlug, sectionId)
+    ?? getAutomationIacSectionDiagram(articleSlug, sectionId)
     ?? getNetworkSecuritySectionDiagram(articleSlug, sectionId)
     ?? getDockerLinuxSectionDiagram(articleSlug, sectionId)
     ?? getSectionDiagram(articleSlug, sectionId);
 }
 
 function interviewVisual(articleSlug: string, question: string) {
-  return getAutomationIacCoreInterviewVisual(articleSlug, question)
+  return getAwsInterviewVisual(articleSlug, question)
+    ?? getAutomationIacCoreInterviewVisual(articleSlug, question)
     ?? getAutomationIacInterviewVisual(articleSlug, question)
     ?? getNetworkSecurityInterviewVisual(articleSlug, question)
     ?? getDockerLinuxInterviewVisual(articleSlug, question)
@@ -60,6 +63,7 @@ export function WikiArticleAccordions({ articleSlug, sections, interviewQuestion
       ...interviewQuestions,
       ...getNetworkSecurityExtraQuestions(articleSlug),
       ...getAutomationIacExtraQuestions(articleSlug),
+      ...getAwsExtraQuestions(articleSlug),
     ])),
     [articleSlug, interviewQuestions],
   );
