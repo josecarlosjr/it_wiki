@@ -1,4 +1,5 @@
 import type { DiagramSpec, InterviewVisual } from './diagrams';
+import { diagramTextEn } from './diagram-text-en';
 
 const exact: Record<string, string> = {
   'Fundamentos': 'Fundamentals', 'Intermediário': 'Intermediate', 'Avançado': 'Advanced', 'Especialista': 'Expert',
@@ -28,25 +29,6 @@ const exact: Record<string, string> = {
 };
 
 const phrases: Array<[RegExp, string]> = [
-  [/\bArquitetura básica do Kubernetes\b/g, 'Basic Kubernetes architecture'],
-  [/\bCaminho de tráfego e readiness\b/g, 'Traffic path and readiness'],
-  [/\bControl plane altamente disponível com etcd em quorum\b/g, 'Highly available control plane with etcd quorum'],
-  [/\bPipeline de segurança de uma requisição à API\b/g, 'API request security pipeline'],
-  [/\bEscolha do controlador de workload\b/g, 'Choosing a workload controller'],
-  [/\bFalha de readiness sem reinício automático\b/g, 'Readiness failure without automatic restart'],
-  [/\bTroubleshooting de Service sem endpoints\b/g, 'Troubleshooting a Service with no endpoints'],
-  [/\bQuorum do etcd com três membros\b/g, 'etcd quorum with three members'],
-  [/\bImagem, container, filesystem e volume\b/g, 'Image, container, filesystem, and volume'],
-  [/\bMulti-stage build: builder separado da imagem final\b/g, 'Multi-stage build: builder separated from final image'],
-  [/\bIsolamento de container no Linux\b/g, 'Linux container isolation'],
-  [/\bSupply chain de uma imagem de produção\b/g, 'Production image supply chain'],
-  [/\bProcesso Linux, descritores e interfaces virtuais do kernel\b/g, 'Linux processes, descriptors, and virtual kernel interfaces'],
-  [/\bInodes e blocos: dois limites diferentes\b/g, 'Inodes and blocks: two different limits'],
-  [/\bComunicação entre duas redes\b/g, 'Communication between two networks'],
-  [/\bVPN site-to-site\b/gi, 'Site-to-site VPN'],
-  [/\bPortas e protocolos\b/g, 'Ports and protocols'],
-  [/\bArquitetura segura em camadas\b/g, 'Layered secure architecture'],
-  [/\bZero Trust\b/g, 'Zero Trust'],
   [/\bestado desejado\b/gi, 'desired state'], [/\bestado vivo\b/gi, 'live state'], [/\bestado atual\b/gi, 'live state'],
   [/\baplicação\b/gi, 'application'], [/\baplicações\b/gi, 'applications'], [/\bsegurança\b/gi, 'security'], [/\brede\b/gi, 'network'],
   [/\btráfego\b/gi, 'traffic'], [/\bserviço\b/gi, 'service'], [/\bserviços\b/gi, 'services'], [/\brecurso\b/gi, 'resource'], [/\brecursos\b/gi, 'resources'],
@@ -57,9 +39,12 @@ const phrases: Array<[RegExp, string]> = [
   [/\barmazenamento\b/gi, 'storage'], [/\broteamento\b/gi, 'routing'], [/\bconectividade\b/gi, 'connectivity'], [/\bconexão\b/gi, 'connection'],
   [/\bprodução\b/gi, 'production'], [/\bambiente\b/gi, 'environment'], [/\bambientes\b/gi, 'environments'], [/\bresultado\b/gi, 'result'],
   [/\bfonte\b/gi, 'source'], [/\bdestino\b/gi, 'destination'], [/\bentrada\b/gi, 'input'], [/\bsaída\b/gi, 'output'],
+  [/\bsubnets?\b/gi, 'subnets'], [/\brotas?\b/gi, 'routes'], [/\bcredenciais\b/gi, 'credentials'], [/\btemporárias\b/gi, 'temporary'],
+  [/\bquem pode assumir\b/gi, 'who can assume it'], [/\bo que pode fazer\b/gi, 'what can it do'],
 ];
 
 export function technicalTextEn(value: string) {
+  if (diagramTextEn[value]) return diagramTextEn[value];
   if (exact[value]) return exact[value];
   let result = value;
   for (const [pattern, replacement] of phrases) result = result.replace(pattern, replacement);
