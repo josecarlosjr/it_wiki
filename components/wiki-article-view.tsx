@@ -85,11 +85,11 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
           <h2>{t('Artigos relacionados', 'Related articles')}</h2>
           <div className="related-grid">
             {relatedArticles.map((related) => (
-              <Link className="related-card" href={`/wiki/${related.slug}/`} key={related.slug}>
+              <a className="related-card" href={`/wiki/${related.slug}/`} key={related.slug}>
                 <span>{related.category}</span>
                 <strong>{related.title}</strong>
                 <p>{related.summary}</p>
-              </Link>
+              </a>
             ))}
           </div>
         </section>
