@@ -4,6 +4,7 @@ import "./wiki.css";
 import "./interactive.css";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteChrome } from "@/components/site-chrome";
+import { KubernetesCardEnhancer } from "@/components/kubernetes-card-enhancer";
 
 export const metadata: Metadata = {
   title: {
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="pt-PT" suppressHydrationWarning>
       <body>
         <LanguageProvider>
+          <KubernetesCardEnhancer />
           <SiteChrome>{children}</SiteChrome>
         </LanguageProvider>
       </body>
