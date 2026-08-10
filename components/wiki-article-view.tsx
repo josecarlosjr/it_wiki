@@ -12,6 +12,7 @@ import { AutomationIacReference } from './automation-iac-reference';
 import { AwsReference } from './aws-reference';
 import { VmwareObservabilityReference } from './vmware-observability-reference';
 import { DistributedDataReference } from './distributed-data-reference';
+import { SecurityReference } from './security-reference';
 
 type Props = {
   articlePt: WikiArticle;
@@ -24,6 +25,7 @@ const supplementalConcepts: Record<string, string[]> = {
   'sistemas-distribuidos': ['API', 'HTTP/gRPC', 'Messaging', 'Caching', 'Latency', 'Throughput', 'Concurrency', 'Backpressure', 'Retry', 'Circuit Breaker', 'Load Shedding', 'Sharding'],
   kafka: ['ISR', 'acks', 'min.insync.replicas', 'Consumer Lag', 'Batching', 'Compression', 'Idempotent Producer', 'Transactions', 'Hot Partition'],
   redis: ['Cache-aside', 'Eviction', 'Sentinel', 'Pipelining', 'Cache Stampede', 'Hot Key', 'Replication Lag', 'maxmemory'],
+  seguranca: ['TLS 1.3', 'mTLS', 'Firewall', 'Stateful Inspection', 'WAF', 'Forward Proxy', 'Reverse Proxy', 'Identity Provider', 'OIDC', 'OAuth 2.0', 'RBAC', 'ABAC', 'Zero Trust'],
 };
 
 export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: Props) {
@@ -64,6 +66,10 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-failures">Failure modes</a> : null}
         {article.slug === 'kafka' ? <a href="#kafka-reference">Kafka {t('em produção', 'in production')}</a> : null}
         {article.slug === 'redis' ? <a href="#redis-reference">Redis {t('em produção', 'in production')}</a> : null}
+        {article.slug === 'seguranca' ? <a href="#security-tls">TLS 1.3</a> : null}
+        {article.slug === 'seguranca' ? <a href="#security-firewalls">Firewalls</a> : null}
+        {article.slug === 'seguranca' ? <a href="#security-proxies">{t('Proxy / Reverse Proxy', 'Proxy / Reverse Proxy')}</a> : null}
+        {article.slug === 'seguranca' ? <a href="#security-identity">Identity</a> : null}
         <a href="#relacionados">{t('Artigos relacionados', 'Related articles')}</a>
         <Link className="back-link" href="/wiki/">← {t('Índice completo', 'Full index')}</Link>
       </aside>
@@ -101,6 +107,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'aws' ? <AwsReference /> : null}
         {hasVmwareObservabilityReference ? <VmwareObservabilityReference articleSlug={article.slug} /> : null}
         {hasDistributedDataReference ? <DistributedDataReference articleSlug={article.slug} /> : null}
+        {article.slug === 'seguranca' ? <SecurityReference /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>{t('Artigos relacionados', 'Related articles')}</h2>
