@@ -11,6 +11,7 @@ import { NetworkReference } from './network-reference';
 import { AutomationIacReference } from './automation-iac-reference';
 import { AwsReference } from './aws-reference';
 import { VmwareObservabilityReference } from './vmware-observability-reference';
+import { DistributedDataReference } from './distributed-data-reference';
 
 type Props = {
   articlePt: WikiArticle;
@@ -25,6 +26,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
   const relatedArticles = locale === 'en' ? relatedEn : relatedPt;
   const hasAutomationReference = ['helm', 'terraform', 'ansible', 'cicd'].includes(article.slug);
   const hasVmwareObservabilityReference = ['vmware', 'observabilidade'].includes(article.slug);
+  const hasDistributedDataReference = ['kafka', 'redis', 'sistemas-distribuidos'].includes(article.slug);
 
   return (
     <main className="main wiki-article-layout">
@@ -50,6 +52,11 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         <a href="#entrevista">{t('Entrevista', 'Interview')}</a>
         {hasVmwareObservabilityReference ? <a href="#vmware-observability-reference">{t('Correlação de camadas', 'Cross-layer correlation')}</a> : null}
         {article.slug === 'observabilidade' ? <a href="#trace-waterfall">Trace waterfall</a> : null}
+        {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-reference">{t('Arquitetura escalável', 'Scalable architecture')}</a> : null}
+        {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-performance">Latency / Throughput</a> : null}
+        {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-failures">{t('Failure modes', 'Failure modes')}</a> : null}
+        {article.slug === 'kafka' ? <a href="#kafka-reference">Kafka {t('em produção', 'in production')}</a> : null}
+        {article.slug === 'redis' ? <a href="#redis-reference">Redis {t('em produção', 'in production')}</a> : null}
         <a href="#relacionados">{t('Artigos relacionados', 'Related articles')}</a>
         <Link className="back-link" href="/wiki/">← {t('Índice completo', 'Full index')}</Link>
       </aside>
@@ -86,6 +93,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
         {article.slug === 'aws' ? <AwsReference /> : null}
         {hasVmwareObservabilityReference ? <VmwareObservabilityReference articleSlug={article.slug} /> : null}
+        {hasDistributedDataReference ? <DistributedDataReference articleSlug={article.slug} /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>{t('Artigos relacionados', 'Related articles')}</h2>
