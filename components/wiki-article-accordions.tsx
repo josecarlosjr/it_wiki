@@ -20,6 +20,7 @@ import {
   getVmwareObservabilityInterviewVisual,
   getVmwareObservabilitySectionDiagram,
 } from '@/content/vmware-observability-diagrams';
+import { getDistributedDataSectionDiagram } from '@/content/distributed-data-diagrams';
 import { extraQuestionEn, localizeVisual, technicalTextEn } from '@/content/i18n-technical';
 import { interviewAnswerByQuestionEn } from '@/content/interview-en';
 import { extendedQuestionEn } from '@/content/question-en';
@@ -46,8 +47,15 @@ function answerFallback(question: string, english: boolean) {
   return 'Esta resposta ainda está em revisão editorial. O conteúdo genérico foi mantido apenas como orientação de estrutura; nenhum diagrama é publicado até que a representação técnica seja revisada para este assunto.';
 }
 
-function sectionDiagram(articleSlug: string, sectionId: string) {
-  return getVmwareObservabilitySectionDiagram(articleSlug, sectionId)
+function normalizedDistributedSectionId(articleSlug: string, sectionId: string) {
+  if (articleSlug === 'kafka' && sectionId === 'cluster') return 'confiabilidade';
+  if (articleSlug === 'redis' && sectionId === 'ha') return 'alta-disponibilidade';
+  return sectionId;
+}
+
+function sectionDiagram(articleSlug: string, sectionId: string, locale: 'pt' | 'en') {
+  return getDistributedDataSectionDiagram(articleSlug, normalizedDistributedSectionId(articleSlug, sectionId), locale)
+    ?? getVmwareObservabilitySectionDiagram(articleSlug, sectionId)
     ?? getAwsSectionDiagram(articleSlug, sectionId)
     ?? getAutomationIacSectionDiagram(articleSlug, sectionId)
     ?? getNetworkSecuritySectionDiagram(articleSlug, sectionId)
@@ -90,7 +98,7 @@ export function WikiArticleAccordions({ articleSlug, sections, sectionsEn, inter
         <div className="interactive-accordion">
           {activeSections.map((section) => {
             const isOpen = openSection === section.id;
-            const diagram = sectionDiagram(articleSlug, section.id);
+            const diagram = sectionDiagram(articleSlug, section.id, locale);
             const level = locale === 'en' ? ({ Fundamentos: 'Fundamentals', Intermediário: 'Intermediate', Avançado: 'Advanced', Especialista: 'Expert' } as const)[section.level] : section.level;
             return (
               <section className="interactive-accordion-item" id={section.id} key={section.id}>
