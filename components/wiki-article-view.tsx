@@ -10,6 +10,7 @@ import { LinuxCommandReference } from './linux-command-reference';
 import { NetworkReference } from './network-reference';
 import { AutomationIacReference } from './automation-iac-reference';
 import { AwsReference } from './aws-reference';
+import { VmwareObservabilityReference } from './vmware-observability-reference';
 
 type Props = {
   articlePt: WikiArticle;
@@ -23,6 +24,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
   const article = locale === 'en' ? articleEn : articlePt;
   const relatedArticles = locale === 'en' ? relatedEn : relatedPt;
   const hasAutomationReference = ['helm', 'terraform', 'ansible', 'cicd'].includes(article.slug);
+  const hasVmwareObservabilityReference = ['vmware', 'observabilidade'].includes(article.slug);
 
   return (
     <main className="main wiki-article-layout">
@@ -46,6 +48,8 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'aws' ? <a href="#aws-vpc-hybrid">{t('VPC híbrida', 'Hybrid VPC')}</a> : null}
         {article.slug === 'aws' ? <a href="#aws-vpn">AWS VPN</a> : null}
         <a href="#entrevista">{t('Entrevista', 'Interview')}</a>
+        {hasVmwareObservabilityReference ? <a href="#vmware-observability-reference">{t('Correlação de camadas', 'Cross-layer correlation')}</a> : null}
+        {article.slug === 'observabilidade' ? <a href="#trace-waterfall">Trace waterfall</a> : null}
         <a href="#relacionados">{t('Artigos relacionados', 'Related articles')}</a>
         <Link className="back-link" href="/wiki/">← {t('Índice completo', 'Full index')}</Link>
       </aside>
@@ -81,6 +85,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'redes' ? <NetworkReference /> : null}
         {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
         {article.slug === 'aws' ? <AwsReference /> : null}
+        {hasVmwareObservabilityReference ? <VmwareObservabilityReference articleSlug={article.slug} /> : null}
 
         <section className="article-section" id="relacionados">
           <h2>{t('Artigos relacionados', 'Related articles')}</h2>
