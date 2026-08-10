@@ -2,6 +2,7 @@
 
 import type { DiagramNode, DiagramSpec } from '@/content/diagrams';
 import { localizeDiagram } from '@/content/i18n-technical';
+import { localizeVmwareObservabilityDiagram } from '@/content/vmware-observability-i18n';
 import { useLanguage } from './language-provider';
 
 type DiagramProps = {
@@ -40,7 +41,8 @@ function multilineLabel(label: string) {
 
 export function TopicDiagram({ spec }: DiagramProps) {
   const { locale, t } = useLanguage();
-  const localized = localizeDiagram(spec, locale);
+  const baseLocalized = localizeDiagram(spec, locale);
+  const localized = localizeVmwareObservabilityDiagram(baseLocalized, locale);
   const width = localized.width ?? 920;
   const height = localized.height ?? 420;
   const nodeById = Object.fromEntries(localized.nodes.map((node) => [node.id, node]));
