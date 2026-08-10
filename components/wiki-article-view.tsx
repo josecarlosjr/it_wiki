@@ -13,6 +13,7 @@ import { AwsReference } from './aws-reference';
 import { VmwareObservabilityReference } from './vmware-observability-reference';
 import { DistributedDataReference } from './distributed-data-reference';
 import { SecurityReference } from './security-reference';
+import { KubernetesDeepDiveReference } from './kubernetes-deep-dive-reference';
 
 type Props = {
   articlePt: WikiArticle;
@@ -22,6 +23,7 @@ type Props = {
 };
 
 const supplementalConcepts: Record<string, string[]> = {
+  kubernetes: ['ClusterIP', 'NodePort', 'LoadBalancer', 'Headless Service', 'containerPort', 'targetPort', 'ReplicaSet', 'StatefulSet', 'DaemonSet', 'Affinity', 'Anti-Affinity', 'Node Affinity', 'startupProbe', 'readinessProbe', 'livenessProbe', 'PV', 'PVC', 'StorageClass', 'CNI', 'kubelet', 'kube-proxy', 'mTLS'],
   'sistemas-distribuidos': ['API', 'HTTP/gRPC', 'Messaging', 'Caching', 'Latency', 'Throughput', 'Concurrency', 'Backpressure', 'Retry', 'Circuit Breaker', 'Load Shedding', 'Sharding'],
   kafka: ['ISR', 'acks', 'min.insync.replicas', 'Consumer Lag', 'Batching', 'Compression', 'Idempotent Producer', 'Transactions', 'Hot Partition'],
   redis: ['Cache-aside', 'Eviction', 'Sentinel', 'Pipelining', 'Cache Stampede', 'Hot Key', 'Replication Lag', 'maxmemory'],
@@ -43,6 +45,15 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         <strong>{t('Conteúdo', 'Contents')}</strong>
         <a href="#visao-geral">{t('Visão geral', 'Overview')}</a>
         {article.sections.map((section) => <a href={`#${section.id}`} key={section.id}>{section.title}</a>)}
+        {article.slug === 'kubernetes' ? <a href="#k8s-services">Services / Ports</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-controllers">Controllers</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-scheduling">Scheduling</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-probes">Probes</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-storage">Storage</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-rbac">RBAC</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-networking-deep">CNI / kube-proxy</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-kubelet">kubelet</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-pod-tls">Pod TLS / mTLS</a> : null}
         {article.slug === 'docker' ? <a href="#dockerfile-examples">{t('Exemplos de Dockerfile', 'Dockerfile examples')}</a> : null}
         {article.slug === 'linux' ? <a href="#linux-commands">{t('Comandos avançados', 'Advanced commands')}</a> : null}
         {article.slug === 'redes' ? <a href="#network-vpn">VPN</a> : null}
@@ -68,7 +79,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'redis' ? <a href="#redis-reference">Redis {t('em produção', 'in production')}</a> : null}
         {article.slug === 'seguranca' ? <a href="#security-tls">TLS 1.3</a> : null}
         {article.slug === 'seguranca' ? <a href="#security-firewalls">Firewalls</a> : null}
-        {article.slug === 'seguranca' ? <a href="#security-proxies">{t('Proxy / Reverse Proxy', 'Proxy / Reverse Proxy')}</a> : null}
+        {article.slug === 'seguranca' ? <a href="#security-proxies">Proxy / Reverse Proxy</a> : null}
         {article.slug === 'seguranca' ? <a href="#security-identity">Identity</a> : null}
         <a href="#relacionados">{t('Artigos relacionados', 'Related articles')}</a>
         <Link className="back-link" href="/wiki/">← {t('Índice completo', 'Full index')}</Link>
@@ -100,6 +111,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
           interviewQuestionsEn={articleEn.interviewQuestions}
         />
 
+        {article.slug === 'kubernetes' ? <KubernetesDeepDiveReference /> : null}
         {article.slug === 'docker' ? <DockerfileExamples /> : null}
         {article.slug === 'linux' ? <LinuxCommandReference /> : null}
         {article.slug === 'redes' ? <NetworkReference /> : null}
