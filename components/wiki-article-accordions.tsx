@@ -47,8 +47,14 @@ function answerFallback(question: string, english: boolean) {
   return 'Esta resposta ainda está em revisão editorial. O conteúdo genérico foi mantido apenas como orientação de estrutura; nenhum diagrama é publicado até que a representação técnica seja revisada para este assunto.';
 }
 
+function normalizedDistributedSectionId(articleSlug: string, sectionId: string) {
+  if (articleSlug === 'kafka' && sectionId === 'cluster') return 'confiabilidade';
+  if (articleSlug === 'redis' && sectionId === 'ha') return 'alta-disponibilidade';
+  return sectionId;
+}
+
 function sectionDiagram(articleSlug: string, sectionId: string, locale: 'pt' | 'en') {
-  return getDistributedDataSectionDiagram(articleSlug, sectionId, locale)
+  return getDistributedDataSectionDiagram(articleSlug, normalizedDistributedSectionId(articleSlug, sectionId), locale)
     ?? getVmwareObservabilitySectionDiagram(articleSlug, sectionId)
     ?? getAwsSectionDiagram(articleSlug, sectionId)
     ?? getAutomationIacSectionDiagram(articleSlug, sectionId)
