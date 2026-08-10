@@ -20,10 +20,17 @@ type Props = {
   relatedEn: WikiArticle[];
 };
 
+const supplementalConcepts: Record<string, string[]> = {
+  'sistemas-distribuidos': ['API', 'HTTP/gRPC', 'Messaging', 'Caching', 'Latency', 'Throughput', 'Concurrency', 'Backpressure', 'Retry', 'Circuit Breaker', 'Load Shedding', 'Sharding'],
+  kafka: ['ISR', 'acks', 'min.insync.replicas', 'Consumer Lag', 'Batching', 'Compression', 'Idempotent Producer', 'Transactions', 'Hot Partition'],
+  redis: ['Cache-aside', 'Eviction', 'Sentinel', 'Pipelining', 'Cache Stampede', 'Hot Key', 'Replication Lag', 'maxmemory'],
+};
+
 export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: Props) {
   const { locale, t } = useLanguage();
   const article = locale === 'en' ? articleEn : articlePt;
   const relatedArticles = locale === 'en' ? relatedEn : relatedPt;
+  const concepts = Array.from(new Set([...article.concepts, ...(supplementalConcepts[article.slug] ?? [])]));
   const hasAutomationReference = ['helm', 'terraform', 'ansible', 'cicd'].includes(article.slug);
   const hasVmwareObservabilityReference = ['vmware', 'observabilidade'].includes(article.slug);
   const hasDistributedDataReference = ['kafka', 'redis', 'sistemas-distribuidos'].includes(article.slug);
@@ -54,7 +61,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'observabilidade' ? <a href="#trace-waterfall">Trace waterfall</a> : null}
         {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-reference">{t('Arquitetura escalável', 'Scalable architecture')}</a> : null}
         {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-performance">Latency / Throughput</a> : null}
-        {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-failures">{t('Failure modes', 'Failure modes')}</a> : null}
+        {article.slug === 'sistemas-distribuidos' ? <a href="#distributed-failures">Failure modes</a> : null}
         {article.slug === 'kafka' ? <a href="#kafka-reference">Kafka {t('em produção', 'in production')}</a> : null}
         {article.slug === 'redis' ? <a href="#redis-reference">Redis {t('em produção', 'in production')}</a> : null}
         <a href="#relacionados">{t('Artigos relacionados', 'Related articles')}</a>
@@ -76,7 +83,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
             'Este artigo apresenta o assunto em níveis progressivos. Não existe bloqueio por curso, ordem obrigatória ou pré-requisito artificial: use o índice lateral para ir diretamente ao ponto necessário.',
             'This article presents the topic in progressive levels. There are no course locks, mandatory ordering, or artificial prerequisites: use the table of contents to jump directly to what you need.'
           )}</p>
-          <div className="concept-list large">{article.concepts.map((concept) => <span key={concept}>{concept}</span>)}</div>
+          <div className="concept-list large">{concepts.map((concept) => <span key={concept}>{concept}</span>)}</div>
         </section>
 
         <WikiArticleAccordions
