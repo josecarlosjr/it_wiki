@@ -327,6 +327,102 @@
   margin-top: 1.5rem;
 }
 
+#aws-expandable-reference {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+#aws-expandable-reference > #aws-practical-reference {
+  grid-column: 1 / -1;
+  padding-bottom: 1rem;
+}
+
+#aws-expandable-reference .aws-topic-card {
+  min-height: 118px;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  background: var(--panel);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  scroll-margin-top: 6rem;
+}
+
+#aws-expandable-reference .aws-topic-card:hover,
+#aws-expandable-reference .aws-topic-card:focus-visible {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+#aws-expandable-reference .aws-topic-card > h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-height: 54px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+#aws-expandable-reference .aws-topic-card-hint {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  color: var(--brand);
+  font-size: 1.1rem;
+}
+
+#aws-expandable-reference .aws-topic-card > :not(h2) {
+  display: none;
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded {
+  grid-column: 1 / -1;
+  min-height: 0;
+  padding: 1.5rem;
+  cursor: default;
+  overflow: visible;
+  border-color: color-mix(in srgb, var(--brand) 60%, var(--line));
+  transform: none;
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded > :not(h2) {
+  display: block;
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded > h2 {
+  margin-bottom: 1rem;
+  font-size: 1.45rem;
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded > p,
+#aws-expandable-reference .aws-topic-card.is-expanded > .reference-note {
+  max-width: 78ch;
+  line-height: 1.75;
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded .reference-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded .reference-code,
+#aws-expandable-reference .aws-topic-card.is-expanded .table-wrap {
+  overflow-x: auto;
+}
+
+#aws-expandable-reference .aws-topic-card.is-expanded .topic-diagram {
+  margin-top: 1.5rem;
+}
+
 @media (max-width: 850px) {
   .wiki-article-layout,
   .wiki-list-item,
@@ -344,13 +440,19 @@
     flex-direction: column;
   }
 
-  #kubernetes-deep-dive .reference-grid {
+  #kubernetes-deep-dive .reference-grid,
+  #aws-expandable-reference {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #aws-expandable-reference .aws-topic-card.is-expanded .reference-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 560px) {
-  #kubernetes-deep-dive .reference-grid {
+  #kubernetes-deep-dive .reference-grid,
+  #aws-expandable-reference {
     grid-template-columns: 1fr;
   }
 }

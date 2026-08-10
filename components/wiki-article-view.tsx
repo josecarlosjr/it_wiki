@@ -9,7 +9,7 @@ import { DockerfileExamples } from './dockerfile-examples';
 import { LinuxCommandReference } from './linux-command-reference';
 import { NetworkReference } from './network-reference';
 import { AutomationIacReference } from './automation-iac-reference';
-import { AwsReference } from './aws-reference';
+import { AwsExpandableReference } from './aws-expandable-reference';
 import { VmwareObservabilityReference } from './vmware-observability-reference';
 import { DistributedDataReference } from './distributed-data-reference';
 import { SecurityReference } from './security-reference';
@@ -116,7 +116,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'linux' ? <LinuxCommandReference /> : null}
         {article.slug === 'redes' ? <NetworkReference /> : null}
         {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
-        {article.slug === 'aws' ? <AwsReference /> : null}
+        {article.slug === 'aws' ? <AwsExpandableReference /> : null}
         {hasVmwareObservabilityReference ? <VmwareObservabilityReference articleSlug={article.slug} /> : null}
         {hasDistributedDataReference ? <DistributedDataReference articleSlug={article.slug} /> : null}
         {article.slug === 'seguranca' ? <SecurityReference /> : null}
