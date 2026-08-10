@@ -16,6 +16,10 @@ import {
 } from '@/content/automation-iac-diagrams';
 import { getAutomationIacCoreInterviewVisual } from '@/content/automation-iac-interviews';
 import { getAwsExtraQuestions, getAwsInterviewVisual, getAwsSectionDiagram } from '@/content/aws-diagrams';
+import {
+  getVmwareObservabilityInterviewVisual,
+  getVmwareObservabilitySectionDiagram,
+} from '@/content/vmware-observability-diagrams';
 import { extraQuestionEn, localizeVisual, technicalTextEn } from '@/content/i18n-technical';
 import { interviewAnswerByQuestionEn } from '@/content/interview-en';
 import { extendedQuestionEn } from '@/content/question-en';
@@ -43,7 +47,8 @@ function answerFallback(question: string, english: boolean) {
 }
 
 function sectionDiagram(articleSlug: string, sectionId: string) {
-  return getAwsSectionDiagram(articleSlug, sectionId)
+  return getVmwareObservabilitySectionDiagram(articleSlug, sectionId)
+    ?? getAwsSectionDiagram(articleSlug, sectionId)
     ?? getAutomationIacSectionDiagram(articleSlug, sectionId)
     ?? getNetworkSecuritySectionDiagram(articleSlug, sectionId)
     ?? getDockerLinuxSectionDiagram(articleSlug, sectionId)
@@ -51,7 +56,8 @@ function sectionDiagram(articleSlug: string, sectionId: string) {
 }
 
 function interviewVisual(articleSlug: string, question: string) {
-  return getAwsInterviewVisual(articleSlug, question)
+  return getVmwareObservabilityInterviewVisual(articleSlug, question)
+    ?? getAwsInterviewVisual(articleSlug, question)
     ?? getAutomationIacCoreInterviewVisual(articleSlug, question)
     ?? getAutomationIacInterviewVisual(articleSlug, question)
     ?? getNetworkSecurityInterviewVisual(articleSlug, question)
