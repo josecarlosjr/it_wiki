@@ -1,0 +1,127 @@
+#dockerfile-examples .code-example-list,
+#linux-commands .command-group-list {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: start;
+}
+
+#linux-commands .term-grid {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  align-items: start;
+}
+
+#dockerfile-examples .docs-topic-card,
+#linux-commands .docs-topic-card {
+  min-height: 118px;
+  padding: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  scroll-margin-top: 6rem;
+}
+
+#dockerfile-examples .docs-topic-card:hover,
+#dockerfile-examples .docs-topic-card:focus-visible,
+#linux-commands .docs-topic-card:hover,
+#linux-commands .docs-topic-card:focus-visible {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.docs-topic-card-title {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-height: 54px;
+  margin: 0 !important;
+  color: var(--text);
+  font-size: 1rem !important;
+  line-height: 1.35;
+}
+
+.docs-topic-card-hint {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  color: var(--brand);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+#dockerfile-examples .docs-topic-card > :not(.docs-topic-card-title),
+#linux-commands .docs-topic-card > :not(.docs-topic-card-title) {
+  display: none;
+}
+
+#dockerfile-examples .docs-topic-card.is-expanded,
+#linux-commands .docs-topic-card.is-expanded {
+  grid-column: 1 / -1;
+  min-height: 0;
+  padding: 1.4rem;
+  cursor: default;
+  overflow: visible;
+  border-color: color-mix(in srgb, var(--brand) 60%, var(--line));
+  background: var(--panel);
+  transform: none;
+}
+
+#dockerfile-examples .docs-topic-card.is-expanded > :not(.docs-topic-card-title),
+#linux-commands .docs-topic-card.is-expanded > :not(.docs-topic-card-title) {
+  display: block;
+}
+
+#dockerfile-examples .docs-topic-card.is-expanded > .docs-topic-card-title,
+#linux-commands .docs-topic-card.is-expanded > .docs-topic-card-title {
+  margin-bottom: 1rem !important;
+  font-size: 1.35rem !important;
+}
+
+#dockerfile-examples .docs-topic-card.is-expanded > p,
+#linux-commands .docs-topic-card.is-expanded > p {
+  max-width: 78ch;
+  line-height: 1.75;
+}
+
+#dockerfile-examples .docs-topic-card.is-expanded pre {
+  max-height: none;
+  overflow-x: auto;
+}
+
+#dockerfile-examples .docs-topic-card.is-expanded .instruction-row,
+#linux-commands .docs-topic-card.is-expanded .command-row {
+  grid-template-columns: minmax(220px, .38fr) 1fr;
+}
+
+#linux-commands .term-card.docs-topic-card.is-expanded {
+  min-height: 0;
+}
+
+#linux-commands .term-card.docs-topic-card.is-expanded > p {
+  margin-top: .75rem;
+}
+
+@media (max-width: 850px) {
+  #dockerfile-examples .code-example-list,
+  #linux-commands .command-group-list,
+  #linux-commands .term-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #dockerfile-examples .docs-topic-card.is-expanded .instruction-row,
+  #linux-commands .docs-topic-card.is-expanded .command-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  #dockerfile-examples .code-example-list,
+  #linux-commands .command-group-list,
+  #linux-commands .term-grid {
+    grid-template-columns: 1fr;
+  }
+}
