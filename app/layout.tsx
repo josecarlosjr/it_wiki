@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./wiki.css";
 import "./interactive.css";
+import "./expandable-cards.css";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteChrome } from "@/components/site-chrome";
 import { KubernetesCardEnhancer } from "@/components/kubernetes-card-enhancer";
+import { DockerLinuxCardEnhancer } from "@/components/docker-linux-card-enhancer";
 
 export const metadata: Metadata = {
   title: {
@@ -20,6 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <LanguageProvider>
           <KubernetesCardEnhancer />
+          <DockerLinuxCardEnhancer />
           <SiteChrome>{children}</SiteChrome>
         </LanguageProvider>
       </body>
