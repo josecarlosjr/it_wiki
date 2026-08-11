@@ -1,5 +1,6 @@
 #dockerfile-examples .code-example-list,
-#linux-commands .command-group-list {
+#linux-commands .command-group-list,
+#automation-iac-reference .command-group-list {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   align-items: start;
 }
@@ -10,7 +11,8 @@
 }
 
 #dockerfile-examples .docs-topic-card,
-#linux-commands .docs-topic-card {
+#linux-commands .docs-topic-card,
+#automation-iac-reference .docs-topic-card {
   min-height: 118px;
   padding: 1rem;
   cursor: pointer;
@@ -22,7 +24,9 @@
 #dockerfile-examples .docs-topic-card:hover,
 #dockerfile-examples .docs-topic-card:focus-visible,
 #linux-commands .docs-topic-card:hover,
-#linux-commands .docs-topic-card:focus-visible {
+#linux-commands .docs-topic-card:focus-visible,
+#automation-iac-reference .docs-topic-card:hover,
+#automation-iac-reference .docs-topic-card:focus-visible {
   border-color: var(--brand);
   transform: translateY(-2px);
   outline: none;
@@ -54,12 +58,25 @@
 }
 
 #dockerfile-examples .docs-topic-card > :not(.docs-topic-card-title),
-#linux-commands .docs-topic-card > :not(.docs-topic-card-title) {
+#linux-commands .docs-topic-card > :not(.docs-topic-card-title),
+#automation-iac-reference .docs-topic-card > :not(.docs-topic-card-title) {
   display: none;
 }
 
+#automation-iac-reference .docs-topic-card > .reference-level {
+  display: inline-flex;
+  margin: 0 0 .65rem;
+  padding: .25rem .55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--brand);
+  font-size: .74rem;
+  font-weight: 800;
+}
+
 #dockerfile-examples .docs-topic-card.is-expanded,
-#linux-commands .docs-topic-card.is-expanded {
+#linux-commands .docs-topic-card.is-expanded,
+#automation-iac-reference .docs-topic-card.is-expanded {
   grid-column: 1 / -1;
   min-height: 0;
   padding: 1.4rem;
@@ -71,18 +88,25 @@
 }
 
 #dockerfile-examples .docs-topic-card.is-expanded > :not(.docs-topic-card-title),
-#linux-commands .docs-topic-card.is-expanded > :not(.docs-topic-card-title) {
+#linux-commands .docs-topic-card.is-expanded > :not(.docs-topic-card-title),
+#automation-iac-reference .docs-topic-card.is-expanded > :not(.docs-topic-card-title) {
   display: block;
 }
 
+#automation-iac-reference .docs-topic-card.is-expanded > .reference-level {
+  display: inline-flex;
+}
+
 #dockerfile-examples .docs-topic-card.is-expanded > .docs-topic-card-title,
-#linux-commands .docs-topic-card.is-expanded > .docs-topic-card-title {
+#linux-commands .docs-topic-card.is-expanded > .docs-topic-card-title,
+#automation-iac-reference .docs-topic-card.is-expanded > .docs-topic-card-title {
   margin-bottom: 1rem !important;
   font-size: 1.35rem !important;
 }
 
 #dockerfile-examples .docs-topic-card.is-expanded > p,
-#linux-commands .docs-topic-card.is-expanded > p {
+#linux-commands .docs-topic-card.is-expanded > p,
+#automation-iac-reference .docs-topic-card.is-expanded > p {
   max-width: 78ch;
   line-height: 1.75;
 }
@@ -93,7 +117,8 @@
 }
 
 #dockerfile-examples .docs-topic-card.is-expanded .instruction-row,
-#linux-commands .docs-topic-card.is-expanded .command-row {
+#linux-commands .docs-topic-card.is-expanded .command-row,
+#automation-iac-reference .docs-topic-card.is-expanded .command-row {
   grid-template-columns: minmax(220px, .38fr) 1fr;
 }
 
@@ -108,12 +133,14 @@
 @media (max-width: 850px) {
   #dockerfile-examples .code-example-list,
   #linux-commands .command-group-list,
-  #linux-commands .term-grid {
+  #linux-commands .term-grid,
+  #automation-iac-reference .command-group-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   #dockerfile-examples .docs-topic-card.is-expanded .instruction-row,
-  #linux-commands .docs-topic-card.is-expanded .command-row {
+  #linux-commands .docs-topic-card.is-expanded .command-row,
+  #automation-iac-reference .docs-topic-card.is-expanded .command-row {
     grid-template-columns: 1fr;
   }
 }
@@ -121,7 +148,8 @@
 @media (max-width: 560px) {
   #dockerfile-examples .code-example-list,
   #linux-commands .command-group-list,
-  #linux-commands .term-grid {
+  #linux-commands .term-grid,
+  #automation-iac-reference .command-group-list {
     grid-template-columns: 1fr;
   }
 }
