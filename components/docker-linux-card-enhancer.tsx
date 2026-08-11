@@ -19,6 +19,11 @@ const configs: Config[] = [
     cardSelector: '.command-group, .term-card',
     titleSelector: ':scope > h3, :scope > strong',
   },
+  {
+    rootId: 'automation-iac-reference',
+    cardSelector: '.command-group',
+    titleSelector: ':scope > h3',
+  },
 ];
 
 export function DockerLinuxCardEnhancer() {
