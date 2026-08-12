@@ -9,6 +9,7 @@ import { KubernetesCardEnhancer } from "@/components/kubernetes-card-enhancer";
 import { DockerLinuxCardEnhancer } from "@/components/docker-linux-card-enhancer";
 import { DistributedDataCardEnhancer } from "@/components/distributed-data-card-enhancer";
 import { NetworkSecurityCardEnhancer } from "@/components/network-security-card-enhancer";
+import { VmwareObservabilityCardEnhancer } from "@/components/vmware-observability-card-enhancer";
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <DockerLinuxCardEnhancer />
           <DistributedDataCardEnhancer />
           <NetworkSecurityCardEnhancer />
+          <VmwareObservabilityCardEnhancer />
           <SiteChrome>{children}</SiteChrome>
         </LanguageProvider>
       </body>
