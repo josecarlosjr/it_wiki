@@ -130,11 +130,133 @@
   margin-top: .75rem;
 }
 
+#distributed-expandable-reference,
+#kafka-reference .distributed-concept-grid,
+#redis-reference .distributed-concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+#redis-reference .distributed-concept-grid > .distributed-concept-grid {
+  display: contents;
+}
+
+#distributed-expandable-reference .distributed-expandable-card,
+#kafka-reference .distributed-expandable-card,
+#redis-reference .distributed-expandable-card {
+  min-height: 118px;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  background: var(--panel);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  scroll-margin-top: 6rem;
+}
+
+#distributed-expandable-reference .distributed-expandable-card:hover,
+#distributed-expandable-reference .distributed-expandable-card:focus-visible,
+#kafka-reference .distributed-expandable-card:hover,
+#kafka-reference .distributed-expandable-card:focus-visible,
+#redis-reference .distributed-expandable-card:hover,
+#redis-reference .distributed-expandable-card:focus-visible {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.distributed-card-title {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-height: 54px;
+  margin: 0 !important;
+  color: var(--text);
+  font-size: 1rem !important;
+  line-height: 1.35;
+}
+
+.distributed-card-hint {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  color: var(--brand);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+#distributed-expandable-reference .distributed-expandable-card > :not(.distributed-card-title),
+#kafka-reference .distributed-expandable-card > :not(.distributed-card-title),
+#redis-reference .distributed-expandable-card > :not(.distributed-card-title) {
+  display: none;
+}
+
+#distributed-expandable-reference .distributed-expandable-card.is-expanded,
+#kafka-reference .distributed-expandable-card.is-expanded,
+#redis-reference .distributed-expandable-card.is-expanded {
+  grid-column: 1 / -1;
+  min-height: 0;
+  padding: 1.45rem;
+  cursor: default;
+  overflow: visible;
+  border-color: color-mix(in srgb, var(--brand) 60%, var(--line));
+  background: var(--panel);
+  transform: none;
+}
+
+#distributed-expandable-reference .distributed-expandable-card.is-expanded > :not(.distributed-card-title),
+#kafka-reference .distributed-expandable-card.is-expanded > :not(.distributed-card-title),
+#redis-reference .distributed-expandable-card.is-expanded > :not(.distributed-card-title) {
+  display: block;
+}
+
+#distributed-expandable-reference .distributed-expandable-card.is-expanded > .distributed-card-title,
+#kafka-reference .distributed-expandable-card.is-expanded > .distributed-card-title,
+#redis-reference .distributed-expandable-card.is-expanded > .distributed-card-title {
+  margin-bottom: 1rem !important;
+  font-size: 1.35rem !important;
+}
+
+#distributed-expandable-reference .distributed-expandable-card.is-expanded > p,
+#kafka-reference .distributed-expandable-card.is-expanded > p,
+#redis-reference .distributed-expandable-card.is-expanded > p {
+  max-width: 78ch;
+  line-height: 1.75;
+}
+
+#kafka-reference .distributed-card-role,
+#redis-reference .distributed-card-role {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+#distributed-expandable-reference .distributed-expandable-card.is-expanded .table-wrap,
+#distributed-expandable-reference .distributed-expandable-card.is-expanded .topic-diagram,
+#kafka-reference .distributed-expandable-card.is-expanded .topic-diagram,
+#redis-reference .distributed-expandable-card.is-expanded .topic-diagram {
+  margin-top: 1.25rem;
+}
+
+#distributed-expandable-reference .distributed-expandable-card.is-expanded .reference-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 @media (max-width: 850px) {
   #dockerfile-examples .code-example-list,
   #linux-commands .command-group-list,
   #linux-commands .term-grid,
-  #automation-iac-reference .command-group-list {
+  #automation-iac-reference .command-group-list,
+  #distributed-expandable-reference,
+  #kafka-reference .distributed-concept-grid,
+  #redis-reference .distributed-concept-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -143,13 +265,20 @@
   #automation-iac-reference .docs-topic-card.is-expanded .command-row {
     grid-template-columns: 1fr;
   }
+
+  #distributed-expandable-reference .distributed-expandable-card.is-expanded .reference-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
   #dockerfile-examples .code-example-list,
   #linux-commands .command-group-list,
   #linux-commands .term-grid,
-  #automation-iac-reference .command-group-list {
+  #automation-iac-reference .command-group-list,
+  #distributed-expandable-reference,
+  #kafka-reference .distributed-concept-grid,
+  #redis-reference .distributed-concept-grid {
     grid-template-columns: 1fr;
   }
 }
