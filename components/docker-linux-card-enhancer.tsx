@@ -28,15 +28,18 @@ const configs: Config[] = [
 
 export function DockerLinuxCardEnhancer() {
   useEffect(() => {
-    const cleanups: Array<() => void> = [];
+    const cleanupByCard = new WeakMap<HTMLElement, () => void>();
+    const activeCleanups = new Set<() => void>();
 
-    for (const config of configs) {
+    const enhanceRoot = (config: Config) => {
       const root = document.getElementById(config.rootId);
-      if (!root) continue;
+      if (!root) return;
 
       const cards = Array.from(root.querySelectorAll<HTMLElement>(config.cardSelector));
 
       for (const card of cards) {
+        if (cleanupByCard.has(card)) continue;
+
         card.classList.add('docs-topic-card');
         card.tabIndex = 0;
         card.setAttribute('role', 'button');
@@ -55,7 +58,12 @@ export function DockerLinuxCardEnhancer() {
         }
 
         const setExpanded = (expanded: boolean) => {
-          for (const other of cards) {
+          const currentRoot = document.getElementById(config.rootId);
+          const currentCards = currentRoot
+            ? Array.from(currentRoot.querySelectorAll<HTMLElement>(config.cardSelector))
+            : [];
+
+          for (const other of currentCards) {
             if (other === card) continue;
             other.classList.remove('is-expanded');
             other.setAttribute('aria-expanded', 'false');
@@ -87,14 +95,37 @@ export function DockerLinuxCardEnhancer() {
 
         card.addEventListener('click', onClick);
         card.addEventListener('keydown', onKeyDown);
-        cleanups.push(() => {
+
+        const cleanup = () => {
           card.removeEventListener('click', onClick);
           card.removeEventListener('keydown', onKeyDown);
-        });
-      }
-    }
+          activeCleanups.delete(cleanup);
+        };
 
-    return () => cleanups.forEach((cleanup) => cleanup());
+        cleanupByCard.set(card, cleanup);
+        activeCleanups.add(cleanup);
+      }
+    };
+
+    const enhanceAll = () => {
+      for (const config of configs) enhanceRoot(config);
+    };
+
+    enhanceAll();
+
+    const observer = new MutationObserver(() => {
+      enhanceAll();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      for (const cleanup of Array.from(activeCleanups)) cleanup();
+    };
   }, []);
 
   return null;
