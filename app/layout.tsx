@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/components/language-provider";
 import { SiteChrome } from "@/components/site-chrome";
 import { KubernetesCardEnhancer } from "@/components/kubernetes-card-enhancer";
 import { DockerLinuxCardEnhancer } from "@/components/docker-linux-card-enhancer";
+import { DistributedDataCardEnhancer } from "@/components/distributed-data-card-enhancer";
 
 export const metadata: Metadata = {
   title: {
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <LanguageProvider>
           <KubernetesCardEnhancer />
           <DockerLinuxCardEnhancer />
+          <DistributedDataCardEnhancer />
           <SiteChrome>{children}</SiteChrome>
         </LanguageProvider>
       </body>
