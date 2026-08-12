@@ -1,0 +1,117 @@
+.vmware-observability-topic-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+}
+
+.vmware-observability-topic-grid > .interactive-accordion-item {
+  min-height: 118px;
+  margin: 0;
+  scroll-margin-top: 6rem;
+}
+
+.vmware-observability-topic-grid > .interactive-accordion-item:has(.interactive-accordion-trigger[aria-expanded="true"]) {
+  grid-column: 1 / -1;
+}
+
+.vmware-observability-topic-grid .interactive-accordion-trigger {
+  min-height: 116px;
+  align-items: flex-start;
+}
+
+.vmware-observability-topic-grid > .interactive-accordion-item:has(.interactive-accordion-trigger[aria-expanded="true"]) .interactive-accordion-trigger {
+  min-height: auto;
+}
+
+.vmware-observability-topic-grid .interactive-accordion-content {
+  max-width: none;
+}
+
+.vmware-observability-topic-grid .interactive-accordion-content > p {
+  max-width: 78ch;
+}
+
+.vmware-observability-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1.2rem;
+}
+
+.vmware-observability-reference-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  scroll-margin-top: 6rem;
+}
+
+.vmware-observability-reference-card.is-expanded {
+  grid-column: 1 / -1;
+}
+
+.vmware-observability-reference-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 116px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 0;
+  padding: 1rem 1.1rem;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.vmware-observability-reference-trigger:hover,
+.vmware-observability-reference-trigger:focus-visible {
+  background: rgba(96, 165, 250, 0.08);
+  outline: none;
+}
+
+.vmware-observability-reference-card.is-expanded .vmware-observability-reference-trigger {
+  min-height: auto;
+}
+
+.vmware-observability-reference-trigger > span {
+  display: inline-grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  flex: 0 0 1.8rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  color: var(--brand);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.vmware-observability-reference-content {
+  padding: 0 1.1rem 1.25rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.vmware-observability-reference-content > p {
+  max-width: 78ch;
+}
+
+.vmware-observability-reference-content .topic-diagram,
+.vmware-observability-reference-content .trace-waterfall {
+  margin-top: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .vmware-observability-topic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .vmware-observability-topic-grid,
+  .vmware-observability-reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
