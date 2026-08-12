@@ -33,7 +33,7 @@ export function NetworkReference() {
   const vpnTypes = locale === 'en' ? vpnEn : vpnPt;
   const checklist = locale === 'en' ? checklistEn : checklistPt;
   return (
-    <>
+    <div id="network-reference-cards" className="network-security-card-grid">
       <section className="article-section" id="network-vpn">
         <h2>{t('VPN: modelos e pontos de atenção', 'VPN: models and design considerations')}</h2>
         <p className="section-summary">{t('VPN cria conectividade protegida, mas não substitui roteamento e política. O túnel pode estar estabelecido e mesmo assim a aplicação continuar sem acesso por ausência de rota, retorno, regra ou DNS.', 'A VPN creates protected connectivity but does not replace routing or policy. A tunnel can be established while the application still has no access because of missing routes, return paths, rules, or DNS.')}</p>
@@ -64,6 +64,6 @@ export function NetworkReference() {
           <article className="reference-card"><h3>BGP</h3><p>{t('Protocolo de roteamento entre sistemas autónomos; usa TCP 179 para estabelecer sessões entre peers.', 'Routing protocol between autonomous systems; it uses TCP 179 to establish peer sessions.')}</p></article>
         </div>
       </section>
-    </>
+    </div>
   );
 }
