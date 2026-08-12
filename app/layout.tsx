@@ -3,6 +3,7 @@ import "./globals.css";
 import "./wiki.css";
 import "./interactive.css";
 import "./expandable-cards.css";
+import "./vmware-observability-cards.css";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteChrome } from "@/components/site-chrome";
 import { KubernetesCardEnhancer } from "@/components/kubernetes-card-enhancer";
