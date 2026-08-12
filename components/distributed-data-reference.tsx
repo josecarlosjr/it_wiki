@@ -5,7 +5,6 @@ import { distributedDataReferenceDiagrams } from '@/content/distributed-data-dia
 import { useLanguage } from './language-provider';
 
 type Props = { articleSlug: string };
-
 type Row = [string, string, string];
 
 const distributedRowsPt: Row[] = [
@@ -89,6 +88,10 @@ function Table({ rows }: { rows: Row[] }) {
   return <div className="table-wrap"><table className="reference-table"><thead><tr><th>Concept</th><th>Role</th><th>Design impact</th></tr></thead><tbody>{rows.map(([a,b,c]) => <tr key={a}><td><strong>{a}</strong></td><td>{b}</td><td>{c}</td></tr>)}</tbody></table></div>;
 }
 
+function ConceptCards({ rows }: { rows: Row[] }) {
+  return <div className="distributed-concept-grid">{rows.map(([title, role, impact]) => <article className="distributed-topic-card" key={title}><h3>{title}</h3><p className="distributed-card-role">{role}</p><p>{impact}</p></article>)}</div>;
+}
+
 function FailureGrid({ rows }: { rows: string[][] }) {
   return <div className="reference-grid">{rows.map(([title, text]) => <article className="reference-card" key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>;
 }
@@ -99,8 +102,8 @@ export function DistributedDataReference({ articleSlug }: Props) {
   if (articleSlug === 'sistemas-distribuidos') {
     const architecture = distributedDataReferenceDiagrams.distributedArchitecture(locale);
     const failure = distributedDataReferenceDiagrams.distributedFailure(locale);
-    return <>
-      <section className="article-section" id="distributed-reference">
+    return <div id="distributed-expandable-reference">
+      <section className="article-section distributed-section-card" id="distributed-reference">
         <h2>{t('Arquitetura distribuída escalável — fundamentos e trade-offs', 'Scalable distributed architecture — fundamentals and trade-offs')}</h2>
         <p className="section-summary">{t('O objetivo é conectar APIs, messaging, caching e persistence ao mesmo modelo operacional: latency budget, throughput, capacity, consistency e failure containment.', 'The goal is to connect APIs, messaging, caching, and persistence under one operational model: latency budget, throughput, capacity, consistency, and failure containment.')}</p>
         <TopicDiagram spec={architecture} />
@@ -108,32 +111,32 @@ export function DistributedDataReference({ articleSlug }: Props) {
         <Table rows={locale === 'en' ? distributedRowsEn : distributedRowsPt} />
       </section>
 
-      <section className="article-section" id="distributed-performance">
+      <section className="article-section distributed-section-card" id="distributed-performance">
         <h2>{t('Latency, throughput, concurrency e saturation', 'Latency, throughput, concurrency, and saturation')}</h2>
         <Table rows={locale === 'en' ? performanceEn : performancePt} />
         <div className="reference-note"><strong>Little&apos;s Law:</strong> {t('como aproximação em regime estável, concurrency ≈ throughput × latency. Se a latência dobra enquanto a taxa de chegada permanece igual, o número de requests in-flight tende a crescer — e com ele memória, sockets, threads e pressure sobre pools.', 'as a steady-state approximation, concurrency ≈ throughput × latency. If latency doubles while arrival rate remains constant, the number of in-flight requests tends to grow — along with memory, sockets, threads, and pressure on resource pools.')}</div>
       </section>
 
-      <section className="article-section" id="distributed-failures">
+      <section className="article-section distributed-section-card" id="distributed-failures">
         <h2>{t('Failure modes e contenção de cascatas', 'Failure modes and cascade containment')}</h2>
         <TopicDiagram spec={failure} />
         <FailureGrid rows={locale === 'en' ? failureEn : failurePt} />
         <div className="reference-note"><strong>{t('Princípio:', 'Principle:')}</strong> {t('retries são tráfego. Durante overload, retry sem budget pode reduzir o throughput útil e acelerar a falha. Proteja primeiro a capacidade do sistema.', 'retries are traffic. During overload, retries without a budget can reduce useful throughput and accelerate failure. Protect system capacity first.')}</div>
       </section>
-    </>;
+    </div>;
   }
 
   if (articleSlug === 'kafka') {
     return <section className="article-section" id="kafka-reference">
       <h2>{t('Kafka em produção — ordering, escala, durabilidade e performance', 'Kafka in production — ordering, scale, durability, and performance')}</h2>
       <p className="section-summary">{t('O modelo mental principal é partitioned log. Partitions definem ordering e paralelismo; replicas definem tolerância a falha; consumer groups definem capacidade de leitura; batching e distribuição de chaves determinam grande parte do throughput real.', 'The primary mental model is a partitioned log. Partitions define ordering and parallelism; replicas define failure tolerance; consumer groups define read capacity; batching and key distribution determine much of the real throughput.')}</p>
-      <TopicDiagram spec={distributedDataReferenceDiagrams.kafkaScale(locale)} />
-      <Table rows={locale === 'en' ? kafkaRowsEn : kafkaRowsPt} />
-      <div className="reference-grid">
-        <article className="reference-card"><h3>{t('Planejamento de partitions', 'Partition planning')}</h3><p>{t('Não escolha apenas pelo volume atual. Considere paralelismo futuro, chave de ordenação, recovery traffic, número de consumers e custo operacional de muitas partitions.', 'Do not size only for current volume. Consider future parallelism, ordering keys, recovery traffic, consumer count, and the operational cost of many partitions.')}</p></article>
-        <article className="reference-card"><h3>{t('Durabilidade', 'Durability')}</h3><p>{t('Replication factor, acks=all e min.insync.replicas trabalham em conjunto. Configuração mais segura pode rejeitar writes durante perda de replicas em vez de degradar silenciosamente a durabilidade.', 'Replication factor, acks=all, and min.insync.replicas work together. A safer configuration can reject writes during replica loss rather than silently weakening durability.')}</p></article>
-        <article className="reference-card"><h3>{t('Backpressure', 'Backpressure')}</h3><p>{t('Kafka armazena backlog no log, mas storage não é infinito. Acompanhe lag, retention headroom, ingress/egress e tempo estimado para recuperar o atraso.', 'Kafka stores backlog in the log, but storage is not infinite. Track lag, retention headroom, ingress/egress, and estimated time to catch up.')}</p></article>
-        <article className="reference-card"><h3>{t('Failure modes', 'Failure modes')}</h3><p>{t('Broker loss, ISR shrink, rebalance storms, poison messages, disk pressure, hot partitions e consumer slowdown precisam de runbooks diferentes.', 'Broker loss, ISR shrink, rebalance storms, poison messages, disk pressure, hot partitions, and consumer slowdown require different runbooks.')}</p></article>
+      <div className="distributed-concept-grid">
+        <article className="distributed-topic-card"><h3>{t('Arquitetura e fluxo', 'Architecture and flow')}</h3><p>{t('Veja como producers, partitions, replicas e consumers se relacionam no caminho principal.', 'See how producers, partitions, replicas, and consumers relate in the main data path.')}</p><TopicDiagram spec={distributedDataReferenceDiagrams.kafkaScale(locale)} /></article>
+        {(locale === 'en' ? kafkaRowsEn : kafkaRowsPt).map(([title, role, impact]) => <article className="distributed-topic-card" key={title}><h3>{title}</h3><p className="distributed-card-role">{role}</p><p>{impact}</p></article>)}
+        <article className="distributed-topic-card"><h3>{t('Planejamento de partitions', 'Partition planning')}</h3><p>{t('Não escolha apenas pelo volume atual. Considere paralelismo futuro, chave de ordenação, recovery traffic, número de consumers e custo operacional de muitas partitions.', 'Do not size only for current volume. Consider future parallelism, ordering keys, recovery traffic, consumer count, and the operational cost of many partitions.')}</p></article>
+        <article className="distributed-topic-card"><h3>{t('Durabilidade', 'Durability')}</h3><p>{t('Replication factor, acks=all e min.insync.replicas trabalham em conjunto. Configuração mais segura pode rejeitar writes durante perda de replicas em vez de degradar silenciosamente a durabilidade.', 'Replication factor, acks=all, and min.insync.replicas work together. A safer configuration can reject writes during replica loss rather than silently weakening durability.')}</p></article>
+        <article className="distributed-topic-card"><h3>{t('Backpressure', 'Backpressure')}</h3><p>{t('Kafka armazena backlog no log, mas storage não é infinito. Acompanhe lag, retention headroom, ingress/egress e tempo estimado para recuperar o atraso.', 'Kafka stores backlog in the log, but storage is not infinite. Track lag, retention headroom, ingress/egress, and estimated time to catch up.')}</p></article>
+        <article className="distributed-topic-card"><h3>{t('Failure modes', 'Failure modes')}</h3><p>{t('Broker loss, ISR shrink, rebalance storms, poison messages, disk pressure, hot partitions e consumer slowdown precisam de runbooks diferentes.', 'Broker loss, ISR shrink, rebalance storms, poison messages, disk pressure, hot partitions, and consumer slowdown require different runbooks.')}</p></article>
       </div>
     </section>;
   }
@@ -142,13 +145,13 @@ export function DistributedDataReference({ articleSlug }: Props) {
     return <section className="article-section" id="redis-reference">
       <h2>{t('Redis em produção — cache, latência, memória e alta disponibilidade', 'Redis in production — caching, latency, memory, and high availability')}</h2>
       <p className="section-summary">{t('Redis reduz latency quando usado no lugar certo, mas um cache muda o failure model da aplicação. TTL, eviction, stampede, replication lag, hot keys e cold-cache behavior precisam ser parte do desenho.', 'Redis reduces latency when used in the right place, but a cache changes the application failure model. TTL, eviction, stampede, replication lag, hot keys, and cold-cache behavior must be part of the design.')}</p>
-      <TopicDiagram spec={distributedDataReferenceDiagrams.redisCache(locale)} />
-      <Table rows={locale === 'en' ? redisRowsEn : redisRowsPt} />
-      <div className="reference-grid">
-        <article className="reference-card"><h3>{t('Cache de latência', 'Latency cache')}</h3><p>{t('O sistema continua correto sem cache, apenas mais lento. Esse é normalmente o failure mode mais seguro.', 'The system remains correct without the cache, only slower. This is usually the safer failure mode.')}</p></article>
-        <article className="reference-card"><h3>{t('Cache de capacidade', 'Capacity cache')}</h3><p>{t('O backend não suporta toda a carga sem cache. Uma perda ampla do cache pode causar cascading failure; warm-up e load shedding tornam-se requisitos.', 'The backend cannot support full load without the cache. A broad cache loss can cause a cascading failure; warm-up and load shedding become requirements.')}</p></article>
-        <article className="reference-card"><h3>{t('Stampede', 'Stampede')}</h3><p>{t('Muitos misses simultâneos para a mesma chave atingem o backend ao mesmo tempo. Use single-flight/locks curtos, TTL jitter e stale-while-revalidate quando o produto permitir.', 'Many simultaneous misses for the same key hit the backend at once. Use single-flight/short locks, TTL jitter, and stale-while-revalidate when product semantics allow it.')}</p></article>
-        <article className="reference-card"><h3>{t('Hot key', 'Hot key')}</h3><p>{t('Uma chave muito popular pode saturar um único shard. Replicação de leitura, key splitting ou cache local podem ajudar, dependendo da semântica.', 'One very popular key can saturate a single shard. Read replication, key splitting, or local caching can help depending on semantics.')}</p></article>
+      <div className="distributed-concept-grid">
+        <article className="distributed-topic-card"><h3>{t('Cache-aside e fluxo principal', 'Cache-aside and primary flow')}</h3><p>{t('Veja hit, miss, acesso ao source of truth e repopulação com TTL.', 'See hit, miss, source-of-truth access, and repopulation with TTL.')}</p><TopicDiagram spec={distributedDataReferenceDiagrams.redisCache(locale)} /></article>
+        <ConceptCards rows={locale === 'en' ? redisRowsEn : redisRowsPt} />
+        <article className="distributed-topic-card"><h3>{t('Cache de latência', 'Latency cache')}</h3><p>{t('O sistema continua correto sem cache, apenas mais lento. Esse é normalmente o failure mode mais seguro.', 'The system remains correct without the cache, only slower. This is usually the safer failure mode.')}</p></article>
+        <article className="distributed-topic-card"><h3>{t('Cache de capacidade', 'Capacity cache')}</h3><p>{t('O backend não suporta toda a carga sem cache. Uma perda ampla do cache pode causar cascading failure; warm-up e load shedding tornam-se requisitos.', 'The backend cannot support full load without the cache. A broad cache loss can cause a cascading failure; warm-up and load shedding become requirements.')}</p></article>
+        <article className="distributed-topic-card"><h3>{t('Stampede', 'Stampede')}</h3><p>{t('Muitos misses simultâneos para a mesma chave atingem o backend ao mesmo tempo. Use single-flight/locks curtos, TTL jitter e stale-while-revalidate quando o produto permitir.', 'Many simultaneous misses for the same key hit the backend at once. Use single-flight/short locks, TTL jitter, and stale-while-revalidate when product semantics allow it.')}</p></article>
+        <article className="distributed-topic-card"><h3>{t('Hot key', 'Hot key')}</h3><p>{t('Uma chave muito popular pode saturar um único shard. Replicação de leitura, key splitting ou cache local podem ajudar, dependendo da semântica.', 'One very popular key can saturate a single shard. Read replication, key splitting, or local caching can help depending on semantics.')}</p></article>
       </div>
     </section>;
   }
