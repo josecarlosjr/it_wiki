@@ -10,6 +10,7 @@ import { LinuxCommandReference } from './linux-command-reference';
 import { NetworkReference } from './network-reference';
 import { AutomationIacReference } from './automation-iac-reference';
 import { AwsExpandableReference } from './aws-expandable-reference';
+import { GcpReference } from './gcp-reference';
 import { VmwareObservabilityReference } from './vmware-observability-reference';
 import { DistributedDataReference } from './distributed-data-reference';
 import { SecurityReference } from './security-reference';
@@ -24,6 +25,7 @@ type Props = {
 
 const supplementalConcepts: Record<string, string[]> = {
   kubernetes: ['ClusterIP', 'NodePort', 'LoadBalancer', 'Headless Service', 'containerPort', 'targetPort', 'ReplicaSet', 'StatefulSet', 'DaemonSet', 'Affinity', 'Anti-Affinity', 'Node Affinity', 'startupProbe', 'readinessProbe', 'livenessProbe', 'PV', 'PVC', 'StorageClass', 'CNI', 'kubelet', 'kube-proxy', 'mTLS'],
+  gcp: ['IAM', 'Service Account', 'Workload Identity Federation', 'Compute Engine', 'Managed Instance Group', 'Cloud Run', 'Cloud Storage', 'Cloud SQL', 'GKE', 'Pub/Sub', 'Global VPC', 'Shared VPC', 'Cloud Load Balancing', 'Cloud VPN', 'Cloud Interconnect', 'Cloud Router'],
   'sistemas-distribuidos': ['API', 'HTTP/gRPC', 'Messaging', 'Caching', 'Latency', 'Throughput', 'Concurrency', 'Backpressure', 'Retry', 'Circuit Breaker', 'Load Shedding', 'Sharding'],
   kafka: ['ISR', 'acks', 'min.insync.replicas', 'Consumer Lag', 'Batching', 'Compression', 'Idempotent Producer', 'Transactions', 'Hot Partition'],
   redis: ['Cache-aside', 'Eviction', 'Sentinel', 'Pipelining', 'Cache Stampede', 'Hot Key', 'Replication Lag', 'maxmemory'],
@@ -69,6 +71,16 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'aws' ? <a href="#aws-messaging">SNS / SQS</a> : null}
         {article.slug === 'aws' ? <a href="#aws-vpc-hybrid">{t('VPC híbrida', 'Hybrid VPC')}</a> : null}
         {article.slug === 'aws' ? <a href="#aws-vpn">AWS VPN</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-reference">GCP ↔ AWS</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-iam">IAM</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-compute">Compute Engine</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-cloudrun">Cloud Run</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-storage">Cloud Storage</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-cloudsql">Cloud SQL</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-gke">GKE</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-pubsub">Pub/Sub</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-vpc">VPC</a> : null}
+        {article.slug === 'gcp' ? <a href="#gcp-hybrid">Hybrid</a> : null}
         <a href="#entrevista">{t('Entrevista', 'Interview')}</a>
         {hasVmwareObservabilityReference ? <a href="#vmware-observability-reference">{t('Correlação de camadas', 'Cross-layer correlation')}</a> : null}
         {article.slug === 'observabilidade' ? <a href="#trace-waterfall">Trace waterfall</a> : null}
@@ -117,6 +129,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'redes' ? <NetworkReference /> : null}
         {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
         {article.slug === 'aws' ? <AwsExpandableReference /> : null}
+        {article.slug === 'gcp' ? <GcpReference /> : null}
         {hasVmwareObservabilityReference ? <VmwareObservabilityReference articleSlug={article.slug} /> : null}
         {hasDistributedDataReference ? <DistributedDataReference articleSlug={article.slug} /> : null}
         {article.slug === 'seguranca' ? <SecurityReference /> : null}
