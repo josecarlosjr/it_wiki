@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { getKubernetesIstioDiagram } from '@/content/kubernetes-istio-diagrams';
+import { getIstioAmbientFullDiagram } from '@/content/istio-ambient-full-diagram';
 import { istioGroups, istioTopics } from '@/content/kubernetes-istio-content';
 import { useLanguage } from './language-provider';
 import { TopicDiagram } from './topic-diagram';
@@ -55,6 +56,15 @@ export function KubernetesIstioReference() {
                     {isOpen ? (
                       <div className="istio-topic-content">
                         <p>{topic.summary[locale]}</p>
+                        {topic.id === 'istio-ambient' ? (
+                          <div className="reference-note">
+                            <strong>{t('Importante sobre a arquitetura Ambient:', 'Important about Ambient architecture:')}</strong>{' '}
+                            {t(
+                              'o Istio CNI configura o redirecionamento transparente para o ztunnel local de cada Node; ztunnel é o proxy L4 por Node; waypoint é um proxy Envoy L7 opcional normalmente associado a namespace/service. O Istiod observa Kubernetes/Istio resources e distribui configuração via xDS. Em tráfego ingress, o waypoint do destino é ignorado por padrão e só entra no caminho quando essa integração é habilitada explicitamente.',
+                              'Istio CNI configures transparent redirection to the node-local ztunnel; ztunnel is the per-node L4 proxy; waypoint is an optional L7 Envoy proxy typically scoped to a namespace/service. Istiod watches Kubernetes/Istio resources and distributes configuration through xDS. For ingress traffic, the destination waypoint is bypassed by default and only enters the path when that integration is explicitly enabled.'
+                            )}
+                          </div>
+                        ) : null}
                         <h3>{t('Passos da comunicação', 'Communication steps')}</h3>
                         <ol className="istio-numbered-steps">
                           {topic.steps.map((step, index) => (
@@ -64,7 +74,7 @@ export function KubernetesIstioReference() {
                             </li>
                           ))}
                         </ol>
-                        <TopicDiagram spec={getKubernetesIstioDiagram(topic.diagram, locale)} />
+                        <TopicDiagram spec={topic.id === 'istio-ambient' ? getIstioAmbientFullDiagram(locale) : getKubernetesIstioDiagram(topic.diagram, locale)} />
                         {topic.code ? (
                           <>
                             <h3>{t('Exemplo', 'Example')}</h3>
