@@ -5,8 +5,8 @@ export function getIstioAmbientFullDiagram(locale: 'pt' | 'en'): DiagramSpec {
   return {
     title: en ? 'Istio Ambient: complete infrastructure' : 'Istio Ambient: infraestrutura completa',
     description: en
-      ? 'External traffic enters through the load balancer and Istio Gateway. Istio CNI redirects workload traffic to the node-local ztunnel. ztunnel provides the L4 secure overlay over HBONE/mTLS; an optional waypoint provides L7 processing. Istiod watches Kubernetes/Istio resources and configures the data plane through xDS.'
-      : 'O tráfego externo entra pelo load balancer e Istio Gateway. Istio CNI redireciona o tráfego dos workloads ao ztunnel local do Node. ztunnel fornece o secure overlay L4 com HBONE/mTLS; um waypoint opcional fornece processamento L7. Istiod observa recursos Kubernetes/Istio e configura o data plane via xDS.',
+      ? 'Complete view with ingress, Istio CNI, one ztunnel per node, optional L7 waypoint, Kubernetes API, and Istiod/xDS.'
+      : 'Visão completa com ingress, Istio CNI, um ztunnel por Node, waypoint L7 opcional, Kubernetes API e Istiod/xDS.',
     width: 1120,
     height: 610,
     nodes: [
@@ -25,7 +25,7 @@ export function getIstioAmbientFullDiagram(locale: 'pt' | 'en'): DiagramSpec {
     ],
     edges: [
       { from: 'client', to: 'lb', label: '1. HTTPS', animated: true },
-      { from: 'lb', to: 'gw', label: '2. ingress', animated: true },
+      { from: 'lb', to: 'gw', label: en ? '2. ingress' : '2. ingress', animated: true },
       { from: 'cniA', to: 'podA', label: en ? '3. redirect' : '3. redireciona' },
       { from: 'cniB', to: 'podB', label: en ? '3. redirect' : '3. redireciona' },
       { from: 'podA', to: 'ztA', label: en ? '4. capture' : '4. captura', animated: true },
