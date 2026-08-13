@@ -77,6 +77,7 @@ jobs:
           }
           NODE
           )
+          SLUGS+=(api)
 
           test "${#SLUGS[@]}" -gt 0
           echo "Found ${#SLUGS[@]} article routes to validate."

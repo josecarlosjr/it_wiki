@@ -24,10 +24,28 @@ export default function WikiIndexPage() {
       </header>
 
       <nav className="alphabet-nav" aria-label={t('Navegação por categoria', 'Category navigation')}>
+        <a href="#apis-e-integracao">{t('APIs e integração', 'APIs and integration')}</a>
         {categoriesSource.map((category) => (
           <a href={`#${category.toLowerCase().replaceAll(" ", "-")}`} key={category}>{category}</a>
         ))}
       </nav>
+
+      <section className="wiki-category" id="apis-e-integracao">
+        <div className="category-title">
+          <h2>{t('APIs e integração', 'APIs and integration')}</h2>
+          <span>1 {t('artigo', 'article')}</span>
+        </div>
+        <div className="wiki-list">
+          <article className="wiki-list-item">
+            <div>
+              <HardLink href="/wiki/api/"><h3>{t('APIs: arquitetura, performance e segurança', 'APIs: architecture, performance, and security')}</h3></HardLink>
+              <p>{t('REST, SOAP, GraphQL, gRPC, WebSocket, Webhook, MQTT, AMQP, métodos HTTP, otimização e segurança em um guia visual.', 'REST, SOAP, GraphQL, gRPC, WebSocket, Webhook, MQTT, AMQP, HTTP methods, optimization, and security in one visual guide.')}</p>
+              <div className="concept-list">{['REST','GraphQL','gRPC','WebSocket','HTTP','Caching'].map((concept)=><span key={concept}>{concept}</span>)}</div>
+            </div>
+            <HardLink className="read-link" href="/wiki/api/">{t('Abrir artigo →', 'Open article →')}</HardLink>
+          </article>
+        </div>
+      </section>
 
       {categoriesSource.map((category) => {
         const articles = articlesSource.filter((article) => article.category === category);
