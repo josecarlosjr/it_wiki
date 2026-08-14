@@ -10,7 +10,7 @@ remote_state {
   backend = "s3"
   config = {
     bucket         = "company-terraform-state"
-    key            = "${path_relative_to_include()}/terraform.tfstate"
+    key            = "\${path_relative_to_include()}/terraform.tfstate"
     region         = "eu-west-1"
     encrypt        = true
     dynamodb_table = "terraform-locks"
@@ -36,8 +36,8 @@ dependency "vpc" {
 }
 
 inputs = {
-  vpc_id     = dependency.vpc.outputs.vpc_id
-  subnet_ids = dependency.vpc.outputs.private_subnet_ids
+  vpc_id       = dependency.vpc.outputs.vpc_id
+  subnet_ids   = dependency.vpc.outputs.private_subnet_ids
   cluster_name = "prod-eks"
 }`;
 
