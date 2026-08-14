@@ -7,6 +7,7 @@ import "./vmware-observability-cards.css";
 import "./gcp-cards.css";
 import "./api-guide.css";
 import "./istio-cards.css";
+import "./terragrunt-card.css";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteChrome } from "@/components/site-chrome";
 import { KubernetesCardEnhancer } from "@/components/kubernetes-card-enhancer";
