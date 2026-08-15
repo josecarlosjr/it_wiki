@@ -9,6 +9,7 @@ import { DockerfileExamples } from './dockerfile-examples';
 import { LinuxCommandReference } from './linux-command-reference';
 import { NetworkReference } from './network-reference';
 import { AutomationIacReference } from './automation-iac-reference';
+import { TerragruntReference } from './terragrunt-reference';
 import { AwsExpandableReference } from './aws-expandable-reference';
 import { GcpReference } from './gcp-reference';
 import { VmwareObservabilityReference } from './vmware-observability-reference';
@@ -26,6 +27,7 @@ type Props = {
 
 const supplementalConcepts: Record<string, string[]> = {
   kubernetes: ['ClusterIP', 'NodePort', 'LoadBalancer', 'Headless Service', 'containerPort', 'targetPort', 'ReplicaSet', 'StatefulSet', 'DaemonSet', 'Affinity', 'Anti-Affinity', 'Node Affinity', 'startupProbe', 'readinessProbe', 'livenessProbe', 'PV', 'PVC', 'StorageClass', 'CNI', 'kubelet', 'kube-proxy', 'mTLS', 'Istio', 'Envoy', 'Ambient Mesh', 'ztunnel', 'Waypoint', 'VirtualService', 'DestinationRule', 'PeerAuthentication', 'AuthorizationPolicy', 'KServe'],
+  terraform: ['Terragrunt', 'DRY', 'root.hcl', 'terragrunt.hcl', 'dependency', 'run --all', 'Run Queue', 'remote_state'],
   gcp: ['IAM', 'Service Account', 'Workload Identity Federation', 'Compute Engine', 'Managed Instance Group', 'Cloud Run', 'Cloud Storage', 'Cloud SQL', 'GKE', 'Pub/Sub', 'Global VPC', 'Shared VPC', 'Cloud Load Balancing', 'Cloud VPN', 'Cloud Interconnect', 'Cloud Router'],
   'sistemas-distribuidos': ['API', 'HTTP/gRPC', 'Messaging', 'Caching', 'Latency', 'Throughput', 'Concurrency', 'Backpressure', 'Retry', 'Circuit Breaker', 'Load Shedding', 'Sharding'],
   kafka: ['ISR', 'acks', 'min.insync.replicas', 'Consumer Lag', 'Batching', 'Compression', 'Idempotent Producer', 'Transactions', 'Hot Partition'],
@@ -68,6 +70,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'redes' ? <a href="#network-two-networks">{t('Duas redes', 'Connecting two networks')}</a> : null}
         {article.slug === 'redes' ? <a href="#network-ports">{t('Portas e protocolos', 'Ports and protocols')}</a> : null}
         {hasAutomationReference ? <a href="#automation-iac-reference">{t('Guia prático', 'Practical guide')}</a> : null}
+        {article.slug === 'terraform' ? <a href="#terragrunt-reference">Terragrunt</a> : null}
         {article.slug === 'aws' ? <a href="#aws-iam">IAM Roles</a> : null}
         {article.slug === 'aws' ? <a href="#aws-s3">S3</a> : null}
         {article.slug === 'aws' ? <a href="#aws-rds">RDS</a> : null}
@@ -135,6 +138,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'linux' ? <LinuxCommandReference /> : null}
         {article.slug === 'redes' ? <NetworkReference /> : null}
         {hasAutomationReference ? <AutomationIacReference articleSlug={article.slug} /> : null}
+        {article.slug === 'terraform' ? <TerragruntReference /> : null}
         {article.slug === 'aws' ? <AwsExpandableReference /> : null}
         {article.slug === 'gcp' ? <GcpReference /> : null}
         {hasVmwareObservabilityReference ? <VmwareObservabilityReference articleSlug={article.slug} /> : null}

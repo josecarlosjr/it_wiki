@@ -1,0 +1,83 @@
+#terragrunt-reference .terragrunt-card {
+  border: 1px solid var(--line);
+  border-radius: .85rem;
+  background: var(--panel);
+  overflow: hidden;
+}
+
+#terragrunt-reference .terragrunt-trigger {
+  width: 100%;
+  min-height: 118px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+#terragrunt-reference .terragrunt-trigger:hover,
+#terragrunt-reference .terragrunt-trigger:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--brand) 5%, transparent);
+}
+
+#terragrunt-reference .terragrunt-trigger > span:first-child {
+  display: grid;
+  gap: .35rem;
+}
+
+#terragrunt-reference .terragrunt-trigger small {
+  color: var(--brand);
+  font-weight: 800;
+}
+
+#terragrunt-reference .terragrunt-trigger strong {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+#terragrunt-reference .terragrunt-trigger > span:last-child {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  color: var(--brand);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+#terragrunt-reference .terragrunt-card.is-expanded {
+  border-color: color-mix(in srgb, var(--brand) 60%, var(--line));
+}
+
+#terragrunt-reference .terragrunt-card.is-expanded .terragrunt-trigger {
+  min-height: auto;
+  border-bottom: 1px solid var(--line);
+}
+
+#terragrunt-reference .terragrunt-content {
+  padding: 1.4rem;
+}
+
+#terragrunt-reference .terragrunt-content > p,
+#terragrunt-reference .terragrunt-content > .reference-note {
+  max-width: 78ch;
+  line-height: 1.75;
+}
+
+#terragrunt-reference .terragrunt-content h3 {
+  margin-top: 1.8rem;
+}
+
+#terragrunt-reference .terragrunt-content .reference-code {
+  overflow-x: auto;
+  white-space: pre;
+}
