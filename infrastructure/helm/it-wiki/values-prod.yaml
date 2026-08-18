@@ -1,6 +1,6 @@
 image:
   repository: josecarlosjr/it-wiki
-  tag: sha-4511c9d53818
+  tag: sha-d21a1cd632af
 ingress:
   enabled: true
   className: nginx
