@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useLanguage } from './language-provider';
+import { ThemeSwitch } from './theme-switch';
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const { locale, setLocale, t } = useLanguage();
@@ -20,6 +21,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             <Link href="/wiki/redes/">{t('Redes', 'Networking')}</Link>
             <Link href="/entrevistas/">{t('Entrevistas', 'Interviews')}</Link>
           </nav>
+          <ThemeSwitch />
           <div className="language-switch" role="group" aria-label={t('Idioma do site', 'Site language')}>
             <button className={locale === 'pt' ? 'active' : ''} type="button" onClick={() => setLocale('pt')} aria-pressed={locale === 'pt'}>PT</button>
             <button className={locale === 'en' ? 'active' : ''} type="button" onClick={() => setLocale('en')} aria-pressed={locale === 'en'}>EN</button>
