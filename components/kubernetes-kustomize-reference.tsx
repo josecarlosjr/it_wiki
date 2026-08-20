@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { getKustomizeDiagram, type KustomizeDiagramKey } from '@/content/kubernetes-kustomize-diagrams';
 import { useLanguage } from './language-provider';
 import { TopicDiagram } from './topic-diagram';
@@ -14,7 +14,7 @@ type Card = {
   summaryPt: string;
   summaryEn: string;
   diagram: KustomizeDiagramKey;
-  body: (locale: 'pt' | 'en') => React.ReactNode;
+  body: (locale: 'pt' | 'en') => ReactNode;
 };
 
 const basicExample = `# kustomization.yaml
@@ -165,7 +165,7 @@ function Code({ children }: { children: string }) {
   return <pre className="reference-code"><code>{children}</code></pre>;
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({ children }: { children: ReactNode }) {
   return <h3 className="kustomize-subtitle">{children}</h3>;
 }
 
