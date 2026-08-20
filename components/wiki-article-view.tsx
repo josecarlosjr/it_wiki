@@ -16,6 +16,7 @@ import { VmwareObservabilityReference } from './vmware-observability-reference';
 import { DistributedDataReference } from './distributed-data-reference';
 import { SecurityReference } from './security-reference';
 import { KubernetesDeepDiveReference } from './kubernetes-deep-dive-reference';
+import { KubernetesKustomizeReference } from './kubernetes-kustomize-reference';
 import { KubernetesIstioReference } from './kubernetes-istio-reference';
 
 type Props = {
@@ -26,7 +27,7 @@ type Props = {
 };
 
 const supplementalConcepts: Record<string, string[]> = {
-  kubernetes: ['ClusterIP', 'NodePort', 'LoadBalancer', 'Headless Service', 'containerPort', 'targetPort', 'ReplicaSet', 'StatefulSet', 'DaemonSet', 'Affinity', 'Anti-Affinity', 'Node Affinity', 'startupProbe', 'readinessProbe', 'livenessProbe', 'PV', 'PVC', 'StorageClass', 'CNI', 'kubelet', 'kube-proxy', 'mTLS', 'Istio', 'Envoy', 'Ambient Mesh', 'ztunnel', 'Waypoint', 'VirtualService', 'DestinationRule', 'PeerAuthentication', 'AuthorizationPolicy', 'KServe'],
+  kubernetes: ['ClusterIP', 'NodePort', 'LoadBalancer', 'Headless Service', 'containerPort', 'targetPort', 'ReplicaSet', 'StatefulSet', 'DaemonSet', 'Affinity', 'Anti-Affinity', 'Node Affinity', 'startupProbe', 'readinessProbe', 'livenessProbe', 'PV', 'PVC', 'StorageClass', 'CNI', 'kubelet', 'kube-proxy', 'mTLS', 'Kustomize', 'kustomization.yaml', 'Base', 'Overlay', 'Patch', 'Generator', 'Replacement', 'Component', 'Istio', 'Envoy', 'Ambient Mesh', 'ztunnel', 'Waypoint', 'VirtualService', 'DestinationRule', 'PeerAuthentication', 'AuthorizationPolicy', 'KServe'],
   terraform: ['Terragrunt', 'DRY', 'root.hcl', 'terragrunt.hcl', 'dependency', 'run --all', 'Run Queue', 'remote_state'],
   gcp: ['IAM', 'Service Account', 'Workload Identity Federation', 'Compute Engine', 'Managed Instance Group', 'Cloud Run', 'Cloud Storage', 'Cloud SQL', 'GKE', 'Pub/Sub', 'Global VPC', 'Shared VPC', 'Cloud Load Balancing', 'Cloud VPN', 'Cloud Interconnect', 'Cloud Router'],
   'sistemas-distribuidos': ['API', 'HTTP/gRPC', 'Messaging', 'Caching', 'Latency', 'Throughput', 'Concurrency', 'Backpressure', 'Retry', 'Circuit Breaker', 'Load Shedding', 'Sharding'],
@@ -59,6 +60,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         {article.slug === 'kubernetes' ? <a href="#k8s-networking-deep">CNI / kube-proxy</a> : null}
         {article.slug === 'kubernetes' ? <a href="#k8s-kubelet">kubelet</a> : null}
         {article.slug === 'kubernetes' ? <a href="#k8s-pod-tls">Pod TLS / mTLS</a> : null}
+        {article.slug === 'kubernetes' ? <a href="#k8s-kustomize">Kustomize</a> : null}
         {article.slug === 'kubernetes' ? <a href="#k8s-istio">Istio / Service Mesh</a> : null}
         {article.slug === 'kubernetes' ? <a href="#k8s-istio-architecture">Istio Architecture</a> : null}
         {article.slug === 'kubernetes' ? <a href="#k8s-istio-traffic-security">Traffic / Security</a> : null}
@@ -133,6 +135,7 @@ export function WikiArticleView({ articlePt, articleEn, relatedPt, relatedEn }: 
         />
 
         {article.slug === 'kubernetes' ? <KubernetesDeepDiveReference /> : null}
+        {article.slug === 'kubernetes' ? <KubernetesKustomizeReference /> : null}
         {article.slug === 'kubernetes' ? <KubernetesIstioReference /> : null}
         {article.slug === 'docker' ? <DockerfileExamples /> : null}
         {article.slug === 'linux' ? <LinuxCommandReference /> : null}
