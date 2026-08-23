@@ -3,6 +3,7 @@
 import { TopicDiagram } from './topic-diagram';
 import { useLanguage } from './language-provider';
 import { getSecurityDepthDiagram } from '@/content/security-depth-diagrams';
+import { SecurityCertificateLifecycleReference } from './security-certificate-lifecycle-reference';
 
 export function SecurityReference() {
   const { locale, t } = useLanguage();
@@ -12,8 +13,8 @@ export function SecurityReference() {
       <section className="article-section" id="security-reference">
         <h2>{t('Segurança — arquitetura e controles em profundidade', 'Security — architecture and controls in depth')}</h2>
         <p className="section-summary">{t(
-          'Esta seção aprofunda TLS, firewalls, proxies e identidade com foco em arquitetura, fluxo de tráfego, trust boundaries e troubleshooting.',
-          'This section goes deeper into TLS, firewalls, proxies, and identity with an emphasis on architecture, traffic flow, trust boundaries, and troubleshooting.'
+          'Esta seção aprofunda TLS, ciclo de vida de certificados, firewalls, proxies e identidade com foco em arquitetura, fluxo de tráfego, trust boundaries e troubleshooting.',
+          'This section goes deeper into TLS, certificate lifecycle, firewalls, proxies, and identity with an emphasis on architecture, traffic flow, trust boundaries, and troubleshooting.'
         )}</p>
       </section>
 
@@ -32,6 +33,8 @@ export function SecurityReference() {
           </ul>
           <TopicDiagram spec={getSecurityDepthDiagram('tls', locale)} />
         </section>
+
+        <SecurityCertificateLifecycleReference />
 
         <section className="article-section" id="security-firewalls">
           <h2>{t('Firewalls e segmentação', 'Firewalls and segmentation')}</h2>
