@@ -9,6 +9,7 @@ import "./api-guide.css";
 import "./istio-cards.css";
 import "./terragrunt-card.css";
 import "./kustomize-cards.css";
+import "./security-certificate-layout.css";
 import "./theme.css";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteChrome } from "@/components/site-chrome";
