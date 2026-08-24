@@ -3,6 +3,39 @@
   --cert-step-line: color-mix(in srgb, var(--line) 72%, var(--brand) 28%);
 }
 
+/* Closed state: this card participates in the generic Security cards grid.
+   Force all certificate-specific content to stay hidden until the parent card is expanded. */
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) > :not(.network-security-card-title) {
+  display: none !important;
+}
+
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) .certificate-step-list,
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) .certificate-step,
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) .certificate-diagram-block,
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) .certificate-options-grid,
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) .certificate-final-grid,
+#security-reference-cards > #security-certificates.network-security-expandable-card:not(.is-expanded) .certificate-checklist-wrap {
+  display: none !important;
+}
+
+/* Long card titles need reserved space for the + / − control. */
+#security-reference-cards > #security-certificates.network-security-expandable-card {
+  position: relative;
+}
+
+#security-reference-cards > #security-certificates.network-security-expandable-card > .network-security-card-title {
+  position: relative;
+  padding-right: 2.65rem;
+  overflow-wrap: anywhere;
+}
+
+#security-reference-cards > #security-certificates.network-security-expandable-card > .network-security-card-title .network-security-card-hint {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
 #security-certificates .certificate-intro { max-width: 82ch; margin: 0 0 1.25rem; line-height: 1.8; }
 #security-certificates .certificate-diagram-block { margin: 1.5rem 0 1.75rem; }
 #security-certificates .certificate-diagram-block .topic-diagram { margin: 0; }
